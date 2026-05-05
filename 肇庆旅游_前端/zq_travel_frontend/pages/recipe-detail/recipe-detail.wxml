@@ -1,0 +1,154 @@
+<view class="recipe-container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 内容区域 -->
+  <scroll-view wx:else class="content-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <!-- 顶部导航栏 -->
+    <view class="app-bar" style="padding-top: {{statusBarHeight}}px;">
+      <view class="app-bar-content">
+        <view class="app-bar-btn" bindtap="onBack">
+          <text class="material-icon">arrow_back</text>
+        </view>
+        <text class="app-bar-title">疗愈食谱</text>
+        <view class="app-bar-btn" bindtap="onShare">
+          <text class="material-icon">share</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Hero Section -->
+    <view class="hero-section">
+      <image wx:if="{{recipe.image}}" class="hero-image" src="{{recipe.image}}" mode="aspectFill"></image>
+      <view class="hero-gradient"></view>
+    </view>
+
+    <!-- 浮动标题卡片 -->
+    <view class="floating-card">
+      <text class="recipe-name">{{recipe.name}}</text>
+      <text class="recipe-subtitle">{{recipe.description}}</text>
+      
+      <!-- 快速信息 -->
+      <view class="quick-info">
+        <view class="info-chip">
+          <text class="material-icon icon-sm">schedule</text>
+          <text class="chip-text">准备时间: {{recipe.time}}</text>
+        </view>
+        <view class="info-chip">
+          <text class="material-icon icon-sm">bolt</text>
+          <text class="chip-text">热量: {{recipe.calories}}</text>
+        </view>
+      </view>
+      
+      <!-- 标签 -->
+      <view class="recipe-tags">
+        <view class="tag" wx:for="{{recipe.tags}}" wx:key="*this">{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 内容区域 -->
+    <view class="content-area">
+      <!-- 健康益处 -->
+      <view class="section" wx:if="{{recipe.benefits}}">
+        <view class="section-header">
+          <view class="section-indicator"></view>
+          <text class="section-title">健康益处</text>
+        </view>
+        <scroll-view class="benefits-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="benefits-container">
+            <view class="benefit-card" wx:for="{{recipe.benefits}}" wx:key="title">
+              <text class="material-icon benefit-icon">{{item.icon}}</text>
+              <text class="benefit-title">{{item.title}}</text>
+              <text class="benefit-desc">{{item.desc}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 食材清单 -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-indicator"></view>
+          <text class="section-title">食材清单</text>
+        </view>
+        <view class="ingredients-container">
+          <view class="ingredient-item" wx:for="{{recipe.ingredients}}" wx:key="name">
+            <view class="ingredient-left">
+              <view class="ingredient-icon emoji-icon">
+                <text>{{item.icon || '🥬'}}</text>
+              </view>
+              <text class="ingredient-name">{{item.name}}</text>
+            </view>
+            <text class="ingredient-amount">{{item.amount}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 制作步骤 -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-indicator"></view>
+          <text class="section-title">制作步骤</text>
+        </view>
+        <view class="steps-list">
+          <view class="step-item" wx:for="{{recipe.steps}}" wx:key="index" wx:for-index="index">
+            <view class="step-number">{{index + 1}}</view>
+            <view class="step-content">
+              <text class="step-title" wx:if="{{item.title}}">{{item.title}}</text>
+              <text class="step-desc">{{item.desc || item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 营养成分 -->
+      <view class="section" wx:if="{{recipe.nutrition}}">
+        <view class="section-header">
+          <view class="section-indicator"></view>
+          <text class="section-title">营养成分</text>
+        </view>
+        <view class="nutrition-grid">
+          <view class="nutrition-item">
+            <text class="nutrition-value">{{recipe.nutrition.protein}}</text>
+            <text class="nutrition-label">蛋白质</text>
+          </view>
+          <view class="nutrition-item">
+            <text class="nutrition-value">{{recipe.nutrition.fat}}</text>
+            <text class="nutrition-label">脂肪</text>
+          </view>
+          <view class="nutrition-item">
+            <text class="nutrition-value">{{recipe.nutrition.carbs}}</text>
+            <text class="nutrition-label">碳水</text>
+          </view>
+          <view class="nutrition-item">
+            <text class="nutrition-value">{{recipe.nutrition.fiber}}</text>
+            <text class="nutrition-label">纤维</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 小贴士 -->
+      <view class="tips-section" wx:if="{{recipe.tips}}">
+        <view class="tips-header">
+          <text class="material-icon tips-icon">lightbulb</text>
+          <text class="tips-title">小贴士</text>
+        </view>
+        <text class="tips-content">{{recipe.tips}}</text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 浮动操作按钮 -->
+  <view wx:if="{{!loading}}" class="fab-container">
+    <view class="fab-btn" bindtap="startCooking">
+      <text class="material-icon fab-icon">add_circle</text>
+      <text class="fab-text">加入我的疗愈仪式</text>
+    </view>
+  </view>
+</view>

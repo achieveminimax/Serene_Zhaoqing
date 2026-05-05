@@ -1,0 +1,143 @@
+<view class="music-container">
+  <!-- 顶部安全区域 -->
+  <view class="safe-area-top"></view>
+
+  <!-- 内容区域 -->
+  <scroll-view class="content-scroll" scroll-y>
+    <!-- 顶部 Header (改为跟随滚动) -->
+    <view class="music-header">
+      <view class="header-left">
+        <text class="header-icon">🌿</text>
+        <text class="header-title">疗愈音乐</text>
+      </view>
+      <view class="header-right">
+        <text class="header-notify">🔔</text>
+        <view class="header-avatar">
+          <image class="avatar-img" src="https://gitee.com/su_feng_L/picture/raw/main/音频/音频配图/c190005f2dec85478f848bd09f382cb5.jpg" mode="aspectFill"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- Hero 搜索区域 -->
+    <view class="hero-section">
+      <view class="hero-title">寻找内心的<text class="highlight">节奏</text></view>
+      <view class="search-box">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="搜索疗愈音乐..." bindinput="onSearchInput" value="{{searchValue}}"/>
+      </view>
+    </view>
+
+    <!-- 分类标签 -->
+    <view class="category-chips">
+      <view class="chip chip-active">自然</view>
+      <view class="chip">禅意</view>
+      <view class="chip">睡眠</view>
+      <view class="chip">专注</view>
+    </view>
+
+    <!-- 疗愈歌单 -->
+    <view class="section">
+      <view class="section-header-row">
+        <text class="section-title">疗愈歌单</text>
+        <text class="section-more">查看全部</text>
+      </view>
+      <scroll-view class="playlist-scroll" scroll-x>
+        <view class="playlist-card" wx:for="{{recommendList}}" wx:key="id" bindtap="onPlaylistTap" data-id="{{item.id}}">
+          <view class="playlist-cover">
+            <image class="playlist-image" src="{{item.image}}" mode="aspectFill"></image>
+            <view class="playlist-overlay"></view>
+            <view class="playlist-play">
+              <text class="play-btn-icon">▶</text>
+            </view>
+            <view class="playlist-duration">45 分钟</view>
+          </view>
+          <view class="playlist-info">
+            <text class="playlist-name">{{item.title}}</text>
+            <text class="playlist-desc">{{item.desc || '轻柔钢琴与鸟鸣'}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 放松音乐列表 -->
+    <view class="section">
+      <view class="section-header-col">
+        <text class="section-title">放松音乐</text>
+        <text class="section-subtitle">为您的情绪健康精心挑选</text>
+      </view>
+      <view class="song-list">
+        <view class="song-item {{currentIndex === index ? 'playing' : ''}}" wx:for="{{relaxMusic}}" wx:key="index" bindtap="onMusicTap" data-index="{{index}}">
+          <image class="song-cover" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="song-info">
+            <text class="song-name">{{item.name}}</text>
+            <text class="song-artist">{{item.artist}}</text>
+          </view>
+          <view class="song-meta">
+            <text class="song-duration">04:20</text>
+            <text class="song-more">⋮</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 自然声音 Bento 网格 -->
+    <view class="section">
+      <text class="section-title">自然声音</text>
+      <view class="bento-grid">
+        <view class="bento-item bento-rain">
+          <view class="bento-glow"></view>
+          <text class="bento-icon">💧</text>
+          <view class="bento-text">
+            <text class="bento-name">雨声</text>
+            <text class="bento-desc">轻柔淋浴</text>
+          </view>
+        </view>
+        <view class="bento-item bento-breeze">
+          <text class="bento-icon">🍃</text>
+          <view class="bento-text">
+            <text class="bento-name">微风</text>
+            <text class="bento-desc">竹林清风</text>
+          </view>
+        </view>
+        <view class="bento-item bento-ocean">
+          <image class="bento-bg" src="https://gitee.com/su_feng_L/picture/raw/main/音频/音频配图/2dbf1fe2a898e2607c52d27538ff7c89.jpg" mode="aspectFill"></image>
+          <view class="bento-overlay"></view>
+          <text class="bento-icon">🌊</text>
+          <view class="bento-text">
+            <text class="bento-name">海浪</text>
+            <text class="bento-desc">节律舒缓</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 底部浮动播放器 (移到更高位置避免重叠) -->
+  <view class="floating-player" wx:if="{{currentIndex >= 0}}">
+    <view class="player-content">
+      <image class="player-cover" src="{{relaxMusic[currentIndex].image}}" mode="aspectFill"></image>
+      <view class="player-info">
+        <text class="player-song">{{relaxMusic[currentIndex].name}}</text>
+        <text class="player-artist">{{relaxMusic[currentIndex].artist}}</text>
+      </view>
+      <view class="player-controls">
+        <text class="player-fav" bindtap="toggleFavorite">{{isFavorite ? '❤️' : '🤍'}}</text>
+        <view class="player-play-btn" bindtap="togglePlay">
+          <text>{{isPlaying ? '⏸' : '▶'}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="player-progress">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progress}}%"></view>
+      </view>
+      <view class="progress-time">
+        <text>{{formatTime(currentTime)}}</text>
+        <text>{{formatTime(duration)}}</text>
+      </view>
+    </view>
+  </view>
+</view>

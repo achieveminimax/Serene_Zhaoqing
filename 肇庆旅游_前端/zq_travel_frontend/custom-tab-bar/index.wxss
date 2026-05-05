@@ -1,0 +1,92 @@
+/* 底部导航栏 - 椭圆形状，更加透明 */
+.bottom-nav {
+  position: fixed;
+  bottom: 24rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32rpx;
+  padding: 20rpx 80rpx;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12rpx);
+  -webkit-backdrop-filter: blur(12rpx);
+  border-radius: 100rpx;
+  box-shadow: 0 4rpx 24rpx -4rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+/* 导航项 */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-width: 100rpx;
+}
+
+/* 激活状态 - emerald 渐变背景 */
+.nav-active {
+  background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+  box-shadow: 0 4rpx 16rpx rgba(5, 150, 105, 0.25);
+}
+
+/* 未激活状态 */
+.nav-inactive {
+  background: transparent;
+}
+
+.nav-inactive:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 图标包装 */
+.nav-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图标 */
+.nav-icon {
+  font-size: 32rpx;
+  transition: all 0.3s ease;
+}
+
+.icon-active {
+  filter: brightness(0) invert(1);
+}
+
+/* 文字 */
+.nav-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 18rpx;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-top: 4rpx;
+  color: #065f46;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .bottom-nav {
+    background: rgba(15, 23, 42, 0.15);
+    border: 1rpx solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .nav-text {
+    color: #a7f3d0;
+  }
+  
+  .nav-inactive:active {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}

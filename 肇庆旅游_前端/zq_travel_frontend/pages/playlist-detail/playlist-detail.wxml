@@ -1,0 +1,66 @@
+<view class="playlist-container">
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-btn" bindtap="onBack">
+      <text class="iconfont">←</text>
+    </view>
+    <text class="nav-title">歌单</text>
+    <view class="nav-btn" bindtap="onMore">
+      <text class="iconfont">⋮</text>
+    </view>
+  </view>
+
+  <!-- 沉浸式头部区域 -->
+  <view class="header-section">
+    <!-- 背景模糊图 -->
+    <view class="header-bg">
+      <image class="bg-image" src="{{playlist.cover || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXMIr5tilGL-unLQc8cQMW3auYi6-rfNnLkRVw7595oxKTv0Fkky3rUs7nL9aqA2Fmb9KzIKu7TfpiqIHQ9Bt7oSNOkWXumMBpSidM_yAOWu7eaunoiUusbQaM-6cifIq0aIYPIvgiEqBqLMTjx7jwqi-Dwz27u-FJv_QmcPqRrlYheZPTs0fjMRBlZ9RVpzmBw4sxwAU7U6BsNiTV0T48X1bb5QFgdKZUOG4MR1Ok0tY3UFY8akxEIxDNqK8XXwA7pYR_D7fNGT0'}}" mode="aspectFill"></image>
+      <view class="bg-overlay"></view>
+    </view>
+
+    <!-- 内容层 -->
+    <view class="header-content">
+      <view class="cover-wrapper">
+        <image class="cover-image" src="{{playlist.cover || 'https://lh3.googleusercontent.com/aida-public/AB6AXuBx3xmMyUZoLXPB7GonERMw2WqLq4k1L5yyKy7K3YYHQImu6jzi0jG9ZOdMxqwSoFOEkQgFY4Jfz7UxUf7GRu4gOAIZFBaHMiD64ulwX7azrMH72ycZJF72MWY9ZGwedwMb90HgbSBA5XcOcAEFuFhTGliqybMNC0IbmnGhiBLkozuCtSCYJSNNz05YnBM9DQta8FxxWzW4S1OmVD-_o1IYEMgRGYNore7kLZ0M2iXG_gJrdORXKAdp7fIVcrJvwvPxmWOgE2o4kDQ'}}" mode="aspectFill"></image>
+      </view>
+      <text class="playlist-title">{{playlist.title || '晨雾旋律'}}</text>
+      <text class="playlist-desc">{{playlist.description || '精选轻柔钢琴与自然声音，让你以清晰的心境开启新的一天。'}}</text>
+
+      <!-- 操作按钮 -->
+      <view class="action-buttons">
+        <view class="btn-primary" bindtap="playAll">
+          <text class="iconfont btn-icon">▶</text>
+          <text class="btn-text">全部播放</text>
+        </view>
+        <view class="btn-secondary" bindtap="shufflePlay">
+          <text class="iconfont btn-icon">⇄</text>
+          <text class="btn-text">随机播放</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 歌曲列表 -->
+  <view class="track-list">
+    <view
+      class="track-item {{currentIndex === index ? 'playing' : ''}}"
+      wx:for="{{playlist.tracks}}"
+      wx:key="index"
+      data-index="{{index}}"
+      bindtap="onTrackTap"
+    >
+      <text class="track-number">{{index + 1 < 10 ? '0' + (index + 1) : index + 1}}</text>
+      <view class="track-info">
+        <text class="track-name {{currentIndex === index ? 'text-primary' : ''}}">{{item.name}}</text>
+        <text class="track-artist">{{item.artist}}</text>
+      </view>
+      <text class="track-duration">{{item.duration}}</text>
+      <view class="track-more" catchtap="onTrackMore" data-index="{{index}}">
+        <text class="iconfont more-icon">⋯</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部安全区域 -->
+  <view class="safe-area-bottom"></view>
+</view>

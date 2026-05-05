@@ -1,0 +1,88 @@
+# ============================================
+# 肇庆旅游小程序后端 - Git忽略文件
+# Java Spring Boot / Maven 项目
+# ============================================
+
+# 编译输出
+target/
+build/
+out/
+*.class
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Gradle
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+*.iws
+.idea_modules/
+
+# IDE - Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# IDE - NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# IDE - VS Code
+.vscode/
+
+# 日志文件
+*.log
+logs/
+
+# 本地配置文件（包含敏感信息）
+application-local.yml
+application-dev-local.yml
+application-prod-local.yml
+application-*.yml.local
+bootstrap-local.yml
+
+# 环境变量文件
+.env
+.env.local
+
+# 测试相关
+*.hprof
+
+# 临时文件
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db

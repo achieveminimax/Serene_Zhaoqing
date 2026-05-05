@@ -1,0 +1,107 @@
+/* 骨架屏样式 */
+.skeleton {
+  padding: 32rpx;
+  background: #fff;
+}
+
+/* 骨架屏动画 */
+.skeleton-active .skeleton-avatar,
+.skeleton-active .skeleton-image,
+.skeleton-active .skeleton-banner,
+.skeleton-active .skeleton-title,
+.skeleton-active .skeleton-text {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonLoading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 列表骨架屏 */
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.skeleton-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 24rpx;
+  background: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.skeleton-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-title {
+  height: 36rpx;
+  width: 60%;
+  border-radius: 8rpx;
+  background: #f0f0f0;
+}
+
+.skeleton-text {
+  height: 28rpx;
+  width: 80%;
+  border-radius: 8rpx;
+  background: #f0f0f0;
+}
+
+/* 卡片骨架屏 */
+.skeleton-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+}
+
+.skeleton-card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 240rpx;
+  border-radius: 24rpx;
+  background: #f0f0f0;
+}
+
+/* 详情骨架屏 */
+.skeleton-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.skeleton-banner {
+  width: 100%;
+  height: 400rpx;
+  border-radius: 24rpx;
+  background: #f0f0f0;
+}
+
+.skeleton-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}

@@ -1,0 +1,15 @@
+<view class="grid-menu">
+  <view 
+    wx:for="{{items}}" 
+    wx:key="index"
+    class="grid-item {{columns === 3 ? 'grid-3' : 'grid-4'}}"
+    bindtap="onItemTap"
+    data-index="{{index}}"
+  >
+    <view class="grid-icon-wrapper" style="background: {{item.bgColor || 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)'}}">
+      <text class="icon icon-{{item.icon}} icon-md" style="color: {{item.iconColor || '#333'}}"></text>
+    </view>
+    <text class="grid-text">{{item.text}}</text>
+    <text class="grid-desc" wx:if="{{item.desc}}">{{item.desc}}</text>
+  </view>
+</view>

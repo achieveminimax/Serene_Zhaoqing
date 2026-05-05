@@ -1,0 +1,31 @@
+<view class="skeleton {{active ? 'skeleton-active' : ''}}">
+  <!-- 列表骨架屏 -->
+  <view wx:if="{{type === 'list'}}" class="skeleton-list">
+    <view wx:for="{{3}}" wx:key="*this" class="skeleton-item">
+      <view class="skeleton-avatar"></view>
+      <view class="skeleton-content">
+        <view class="skeleton-title"></view>
+        <view class="skeleton-text"></view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 卡片骨架屏 -->
+  <view wx:if="{{type === 'card'}}" class="skeleton-card">
+    <view wx:for="{{4}}" wx:key="*this" class="skeleton-card-item">
+      <view class="skeleton-image"></view>
+      <view class="skeleton-title"></view>
+      <view class="skeleton-text"></view>
+    </view>
+  </view>
+  
+  <!-- 详情骨架屏 -->
+  <view wx:if="{{type === 'detail'}}" class="skeleton-detail">
+    <view class="skeleton-banner"></view>
+    <view class="skeleton-section">
+      <view class="skeleton-title"></view>
+      <view class="skeleton-text"></view>
+      <view class="skeleton-text"></view>
+    </view>
+  </view>
+</view>

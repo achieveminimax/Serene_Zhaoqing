@@ -1,0 +1,108 @@
+/* 悬浮按钮容器 */
+.fab-container {
+  position: fixed;
+  right: 32rpx;
+  bottom: 160rpx;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20rpx;
+  opacity: 0;
+  transform: translateY(20rpx);
+  transition: all 0.3s ease;
+}
+
+.fab-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 主按钮 */
+.fab-main {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4D6A4D 0%, #7AA87A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(77, 106, 77, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.fab-main:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 16rpx rgba(77, 106, 77, 0.3);
+}
+
+.fab-expanded {
+  background: linear-gradient(135deg, #7B8B9A 0%, #5D7A5D 100%);
+}
+
+.fab-icon {
+  font-size: 48rpx;
+  color: #fff;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+}
+
+.fab-rotate {
+  transform: rotate(45deg);
+}
+
+/* 操作按钮组 */
+.fab-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.fab-action-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  opacity: 0;
+  transform: translateX(20rpx);
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fab-action-text {
+  font-size: 24rpx;
+  color: #333;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.fab-action-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.fab-action-btn:active {
+  transform: scale(0.95);
+}
+
+.fab-action-btn .icon {
+  font-size: 32rpx;
+  color: #4D6A4D;
+}

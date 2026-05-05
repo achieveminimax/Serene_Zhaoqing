@@ -1,0 +1,115 @@
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="top-app-bar">
+    <view class="header-left" bindtap="onBack">
+      <text class="icon-back">←</text>
+      <text class="header-title">疗愈圣地</text>
+    </view>
+    <view class="header-right" bindtap="onFavorite">
+      <text class="icon-favorite {{isFavorite ? 'active' : ''}}">♥</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 内容区域 -->
+  <scroll-view wx:else class="content-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <!-- Hero Header Section -->
+    <view class="hero-section">
+      <image class="hero-image" src="{{scenicInfo.heroImage}}" mode="aspectFill"></image>
+      <view class="hero-gradient"></view>
+      <!-- 玻璃态信息卡片 -->
+      <view class="glass-card">
+        <view class="card-header">
+          <text class="category-tag">{{scenicInfo.category}}</text>
+          <text class="scenic-name">{{scenicInfo.name}}</text>
+        </view>
+        <view class="info-tags">
+          <view class="info-tag primary">
+            <text class="tag-icon">💨</text>
+            <text class="tag-text">{{scenicInfo.aqi}} 空气质量</text>
+          </view>
+          <view class="info-tag secondary">
+            <text class="tag-icon">🌡️</text>
+            <text class="tag-text">{{scenicInfo.temperature}}°C</text>
+          </view>
+          <view class="info-tag neutral">
+            <text class="tag-icon">💧</text>
+            <text class="tag-text">{{scenicInfo.humidity}}% 湿度</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 景点介绍区域 -->
+    <view class="intro-section">
+      <view class="intro-main">
+        <text class="quote">{{scenicInfo.quote}}</text>
+        <text class="description">{{scenicInfo.description}}</text>
+        <text class="description-secondary">{{scenicInfo.descriptionSecondary}}</text>
+      </view>
+      <!-- 侧边信息栏 -->
+      <view class="info-sidebar">
+        <text class="sidebar-title">游客指南</text>
+        <view class="sidebar-list">
+          <view class="sidebar-item">
+            <text class="item-icon">⏰</text>
+            <text class="item-text">{{scenicInfo.openTime}}</text>
+          </view>
+          <view class="sidebar-item">
+            <text class="item-icon">🥾</text>
+            <text class="item-text">{{scenicInfo.difficulty}}</text>
+          </view>
+          <view class="sidebar-item">
+            <text class="item-icon">📍</text>
+            <text class="item-text">{{scenicInfo.distance}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 亮点展示区域 -->
+    <view class="highlights-section">
+      <view class="section-header">
+        <view class="header-text">
+          <text class="section-title">圣境标志</text>
+          <text class="section-subtitle">探索旅程中的精彩亮点</text>
+        </view>
+      </view>
+      <scroll-view class="highlights-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="highlight-card" wx:for="{{scenicInfo.highlights}}" wx:key="index">
+          <view class="highlight-image-wrap">
+            <image class="highlight-image" src="{{item.image}}" mode="aspectFill"></image>
+          </view>
+          <text class="highlight-title">{{item.title}}</text>
+          <text class="highlight-desc">{{item.description}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 实用信息区域 -->
+    <view class="details-section">
+      <view class="detail-block" wx:for="{{scenicInfo.details}}" wx:key="index">
+        <text class="detail-title">{{item.title}}</text>
+        <view class="detail-content" wx:for="{{item.items}}" wx:for-item="content" wx:key="index">
+          <text class="detail-dot">•</text>
+          <text class="detail-text">{{content}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部 CTA -->
+    <view class="cta-section">
+      <button class="cta-button" bindtap="onStartJourney">
+        开启您的疗愈之旅
+      </button>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+</view>

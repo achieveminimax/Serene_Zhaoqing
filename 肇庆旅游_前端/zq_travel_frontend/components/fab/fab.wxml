@@ -1,0 +1,23 @@
+<view class="fab-container {{show ? 'fab-show' : ''}}">
+  <!-- 展开的操作按钮 -->
+  <view class="fab-actions" wx:if="{{expanded}}">
+    <view 
+      wx:for="{{actions}}" 
+      wx:key="index"
+      class="fab-action-item"
+      style="transition-delay: {{index * 50}}ms"
+      bindtap="onActionTap"
+      data-index="{{index}}"
+    >
+      <text class="fab-action-text">{{item.text}}</text>
+      <view class="fab-action-btn">
+        <text class="icon icon-{{item.icon}}"></text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 主按钮 -->
+  <view class="fab-main {{expanded ? 'fab-expanded' : ''}}" bindtap="onMainTap">
+    <text class="fab-icon {{expanded ? 'fab-rotate' : ''}}">+</text>
+  </view>
+</view>

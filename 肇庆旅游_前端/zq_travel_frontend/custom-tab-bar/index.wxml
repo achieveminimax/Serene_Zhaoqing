@@ -1,0 +1,40 @@
+<view class="bottom-nav">
+  <!-- 首页 -->
+  <view 
+    class="nav-item {{selected === 0 ? 'nav-active' : 'nav-inactive'}}"
+    bindtap="switchTab"
+    data-index="0"
+    data-path="/pages/index/index"
+  >
+    <view class="nav-icon-wrapper">
+      <text class="nav-icon {{selected === 0 ? 'icon-active' : ''}}">🏠</text>
+    </view>
+    <text class="nav-text" wx:if="{{selected !== 0}}">首页</text>
+  </view>
+  
+  <!-- 音乐 -->
+  <view 
+    class="nav-item {{selected === 1 ? 'nav-active' : 'nav-inactive'}}"
+    bindtap="switchTab"
+    data-index="1"
+    data-path="/pages/music/music"
+  >
+    <view class="nav-icon-wrapper">
+      <text class="nav-icon {{selected === 1 ? 'icon-active' : ''}}">📖</text>
+    </view>
+    <text class="nav-text" wx:if="{{selected !== 1}}">音乐</text>
+  </view>
+  
+  <!-- 我的 -->
+  <view 
+    class="nav-item {{selected === 2 ? 'nav-active' : 'nav-inactive'}}"
+    bindtap="switchTab"
+    data-index="2"
+    data-path="/pages/mine/mine"
+  >
+    <view class="nav-icon-wrapper">
+      <text class="nav-icon {{selected === 2 ? 'icon-active' : ''}}">👤</text>
+    </view>
+    <text class="nav-text" wx:if="{{selected !== 2}}">我的</text>
+  </view>
+</view>

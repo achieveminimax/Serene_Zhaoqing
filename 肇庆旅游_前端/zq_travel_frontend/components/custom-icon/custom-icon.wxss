@@ -1,0 +1,9 @@
+.custom-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-canvas {
+  display: block;
+}

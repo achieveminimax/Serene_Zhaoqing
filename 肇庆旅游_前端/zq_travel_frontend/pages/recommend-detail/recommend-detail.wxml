@@ -1,0 +1,62 @@
+<view class="detail-container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 内容区域 -->
+  <scroll-view wx:else class="content-scroll" scroll-y>
+    <!-- 顶部大图区域 -->
+    <view class="hero-section">
+      <image wx:if="{{image}}" class="hero-image" src="{{image}}" mode="aspectFill"></image>
+      <view class="hero-overlay"></view>
+      <view class="hero-content">
+        <view class="hero-decoration">{{decoration}}</view>
+        <view class="hero-title">{{title}}</view>
+        <view class="hero-subtitle">{{description}}</view>
+      </view>
+    </view>
+
+    <!-- 景点信息卡片 -->
+    <view wx:if="{{scenicInfo}}" class="info-card">
+      <view class="info-header">
+        <view class="info-emoji">{{scenicInfo.emoji}}</view>
+        <view class="info-title-group">
+          <view class="info-name">{{scenicInfo.name}}</view>
+          <view class="info-subtitle">{{scenicInfo.subtitle}}</view>
+        </view>
+      </view>
+      
+      <view class="info-desc">{{scenicInfo.desc}}</view>
+      
+      <!-- 标签 -->
+      <view class="info-tags" wx:if="{{scenicInfo.tags}}">
+        <view class="tag" wx:for="{{scenicInfo.tags}}" wx:key="*this">{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 详细信息区块 -->
+    <view wx:if="{{scenicInfo && scenicInfo.sections}}" class="sections-container">
+      <view class="section-block" wx:for="{{scenicInfo.sections}}" wx:key="title">
+        <view class="section-title">{{item.title}}</view>
+        <view class="section-content">
+          <view class="section-item" wx:for="{{item.items}}" wx:key="*this" wx:for-item="subItem">
+            {{subItem}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="bottom-actions">
+      <view class="action-button primary" bindtap="onNavigate">
+        <text class="btn-icon">📍</text>
+        <text class="btn-text">导航前往</text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+</view>

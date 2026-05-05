@@ -1,0 +1,8 @@
+<view class="healing-icon {{className}}" style="{{iconStyle}}">
+  <canvas
+    canvas-id="{{canvasId}}"
+    style="width: {{size}}px; height: {{size}}px;"
+    class="icon-canvas"
+    bindtap="onTap"
+  ></canvas>
+</view>

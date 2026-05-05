@@ -1,0 +1,199 @@
+<view class="container">
+  <!-- 顶部安全区域 -->
+  <view class="safe-area-top"></view>
+
+  <!-- 首页内容 -->
+  <scroll-view class="content-scroll" scroll-y>
+    <!-- 顶部 Header (改为跟随滚动) -->
+    <view class="top-header">
+      <view class="header-left">
+        <text class="header-icon">🌿</text>
+        <text class="header-title">肇庆疗愈</text>
+      </view>
+      <view class="header-right">
+        <text class="header-notify">🔔</text>
+      </view>
+    </view>
+
+    <!-- 搜索框 -->
+    <view class="search-section">
+      <view class="search-box">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="寻找内心的宁静..." bindtap="onSearchTap"/>
+      </view>
+    </view>
+
+    <!-- 精选轮播图 -->
+    <view class="carousel-section">
+      <swiper class="carousel-swiper" 
+              indicator-dots="{{false}}" 
+              autoplay="{{true}}" 
+              interval="4000" 
+              duration="600"
+              circular="{{true}}"
+              previous-margin="75rpx"
+              next-margin="75rpx"
+              display-multiple-items="1"
+              bindchange="onBannerChange">
+        <swiper-item wx:for="{{bannerList}}" wx:key="index" class="swiper-item">
+          <view class="carousel-item {{currentBannerIndex === index ? 'active' : ''}}">
+            <image class="carousel-image" src="{{item.image}}" mode="aspectFill"></image>
+            <view class="carousel-overlay"></view>
+            <view class="carousel-shine"></view>
+            <view class="carousel-content">
+              <view class="carousel-tag-wrapper">
+                <view class="carousel-tag">{{item.tag || '精选推荐'}}</view>
+              </view>
+              <view class="carousel-title-wrapper">
+                <view class="carousel-title">{{item.title}}</view>
+              </view>
+              <view class="carousel-desc">滑动探索更多疗愈之旅</view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+      <!-- 分页指示器 -->
+      <view class="carousel-dots">
+        <view class="dot-wrapper" wx:for="{{bannerList}}" wx:key="index" bindtap="onDotTap" data-index="{{index}}">
+          <view class="dot {{currentBannerIndex === index ? 'dot-active' : ''}}"></view>
+        </view>
+      </view>
+      <!-- 进度条 -->
+      <view class="carousel-progress">
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{(currentBannerIndex + 1) / bannerList.length * 100}}%"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 精选旅程 -->
+    <view class="section">
+      <view class="section-header-row">
+        <text class="section-title">精选旅程</text>
+        <text class="section-more">查看全部</text>
+      </view>
+      <view class="journey-list">
+        <view class="journey-card glass-card" wx:for="{{recommendList}}" wx:key="id" bindtap="onCardTap" data-id="{{item.id}}">
+          <image class="journey-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="journey-info">
+            <text class="journey-title">{{item.title}}</text>
+            <text class="journey-desc">{{item.description}}</text>
+            <view class="journey-progress" wx:if="{{item.progress}}">
+              <view class="progress-bar">
+                <view class="progress-fill" style="width: {{item.progress}}%"></view>
+              </view>
+              <text class="progress-text">{{item.progress}}%</text>
+            </view>
+            <view class="journey-action" wx:if="{{item.action}}">
+              <text class="action-text">{{item.action}}</text>
+              <text class="action-icon">▶</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 热门景点推荐 -->
+    <view class="section">
+      <view class="section-header-col">
+        <text class="section-title">热门景点</text>
+        <text class="section-subtitle">探索肇庆自然与文化之美</text>
+      </view>
+
+      <!-- 主景点卡片 - 七星岩 -->
+      <view class="featured-spot-card" bindtap="onScenicTap" data-index="1">
+        <image class="featured-spot-image" src="https://gitee.com/su_feng_L/picture/raw/main/轮播图/678b5d3359576e39ff8bdbea91073c4a.jpg" mode="aspectFill"></image>
+        <view class="featured-spot-overlay"></view>
+        <view class="featured-spot-content">
+          <view class="featured-spot-tag">喀斯特地貌</view>
+          <text class="featured-spot-name">七星岩景区</text>
+          <text class="featured-spot-desc">岭南第一奇观 · 七座石灰岩峰拔地而起</text>
+        </view>
+      </view>
+
+      <!-- 景点网格 -->
+      <view class="spots-grid">
+        <view class="spot-card" wx:for="{{scenicList}}" wx:key="index" bindtap="onScenicTap" data-index="{{index}}">
+          <view class="spot-emoji">{{item.emoji}}</view>
+          <view class="spot-info">
+            <text class="spot-name">{{item.name}}</text>
+            <text class="spot-subtitle">{{item.subtitle}}</text>
+          </view>
+          <view class="spot-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 鼎湖山风景推荐 -->
+    <view class="section">
+      <view class="section-header-col">
+        <text class="section-title">鼎湖山</text>
+        <text class="section-subtitle">沉浸式自然疗愈圣地</text>
+      </view>
+      <view class="landscape-card">
+        <image class="landscape-image" src="https://gitee.com/su_feng_L/picture/raw/main/轮播图/554b863a370cb703fc96353ad1764f1b.jpg" mode="aspectFill"></image>
+        <view class="landscape-overlay"></view>
+        <view class="landscape-badge">
+          <text class="badge-icon">🍃</text>
+          <text class="badge-text">98 空气质量</text>
+        </view>
+        <view class="landscape-content">
+          <text class="landscape-name">飞水潭瀑布</text>
+          <text class="landscape-desc">负离子天堂</text>
+        </view>
+      </view>
+      <view class="landscape-grid">
+        <view class="landscape-item">
+          <text class="item-icon">🏯</text>
+          <text class="item-name">宝莲寺</text>
+          <text class="item-desc">千年禅意回响</text>
+        </view>
+        <view class="landscape-item">
+          <text class="item-icon">🥾</text>
+          <text class="item-name">云雾山径</text>
+          <text class="item-desc">4.2公里感官之旅</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 更多景点展示 -->
+    <view class="section">
+      <view class="section-header-row">
+        <text class="section-title">更多探索</text>
+        <text class="section-more">查看全部</text>
+      </view>
+      <view class="more-spots-list">
+        <view class="more-spot-item" bindtap="onScenicTap" data-index="4">
+          <image class="more-spot-image" src="https://gitee.com/su_feng_L/picture/raw/main/轮播图/d52f9f69b71c9f46ebe76bb6a362ec99.jpg" mode="aspectFill"></image>
+          <view class="more-spot-info">
+            <text class="more-spot-name">鼎湖山茶文化体验</text>
+            <text class="more-spot-desc">禅茶一味 · 养生佳品</text>
+            <view class="more-spot-tags">
+              <text class="spot-tag">🍵 品茶</text>
+              <text class="spot-tag">🌿 采茶</text>
+            </view>
+          </view>
+        </view>
+        <view class="more-spot-item" bindtap="onScenicTap" data-index="5">
+          <image class="more-spot-image" src="https://gitee.com/su_feng_L/picture/raw/main/轮播图/29dde14d6eadf5cc2872725b1e5109cb.jpg" mode="aspectFill"></image>
+          <view class="more-spot-info">
+            <text class="more-spot-name">羚羊峡古栈道</text>
+            <text class="more-spot-desc">华南第一峡 · 徒步胜地</text>
+            <view class="more-spot-tags">
+              <text class="spot-tag">⛰️ 峡谷</text>
+              <text class="spot-tag">🏃 徒步</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 悬浮按钮 FAB (移到更高位置避免重叠) -->
+  <view class="fab-button" bindtap="onFabMainTap">
+    <text class="fab-icon">🍃</text>
+  </view>
+</view>

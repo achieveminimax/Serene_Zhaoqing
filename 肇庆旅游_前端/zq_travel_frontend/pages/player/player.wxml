@@ -1,0 +1,179 @@
+<view class="player-container">
+  <!-- 背景渐变 -->
+  <view class="mist-background"></view>
+  <view class="bg-blob bg-blob-top"></view>
+  <view class="bg-blob bg-blob-bottom"></view>
+
+  <!-- 顶部导航栏 -->
+  <view class="player-header">
+    <view class="header-btn" bindtap="onBack">
+      <text class="iconfont icon-arrow-down">↓</text>
+    </view>
+    <view class="header-center">
+      <text class="header-subtitle">正在播放</text>
+      <text class="header-title">{{currentMusic.name || '森林呼吸'}}</text>
+    </view>
+    <view class="header-btn" bindtap="onShare">
+      <text class="iconfont icon-more">⋯</text>
+    </view>
+  </view>
+
+  <!-- 主要内容区域 -->
+  <view class="player-content">
+    <!-- 封面图区域 -->
+    <view class="album-section">
+      <view class="album-glow"></view>
+      <view class="album-wrapper">
+        <image wx:if="{{currentMusic.image}}" class="album-image" src="{{currentMusic.image}}" mode="aspectFill"></image>
+        <image wx:else class="album-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3EMPOtfvCH7ACr3s2Vi5iY-QpCo-DkE4dpDKiSID9Vj86m2p8KSTZ46rZpJRx0N38KPIO8kdQ6YdMVcluk5hiWMapfMu1XMf5gG6FuN7f5EpTEYf84ANN3UTdTC584Yb0tKdV4KOzEv2GY86l3a_aD5JzEagafq9kUepL3fej0LSxjSePXpvKa8OSdPzVm3wIa3BABVbmTVfcL7UAlI7c1y1lVyejQt5dUwxLe5WR6NEa85xWztEDvll_KpuFQX3v5T6rmhRzMYg" mode="aspectFill"></image>
+        <view class="album-overlay"></view>
+      </view>
+    </view>
+
+    <!-- 歌曲信息 -->
+    <view class="song-info">
+      <text class="song-name">{{currentMusic.name || '森林呼吸'}}</text>
+      <text class="song-artist">{{currentMusic.artist || currentMusic.category || '自然疗愈乐团'}}</text>
+    </view>
+
+    <!-- 进度条 -->
+    <view class="progress-section">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progress}}%;"></view>
+      </view>
+      <view class="time-display">
+        <text class="time-text">{{formatTime(currentTime)}}</text>
+        <text class="time-text">{{formatTime(duration)}}</text>
+      </view>
+    </view>
+
+    <!-- 播放控制 -->
+    <view class="controls-section">
+      <!-- 随机播放 -->
+      <view class="control-btn-small {{playMode === 'random' ? 'active' : ''}}" bindtap="togglePlayMode">
+        <text class="iconfont">⇄</text>
+      </view>
+
+      <!-- 上一首 -->
+      <view class="control-btn" bindtap="playPrev">
+        <text class="iconfont icon-prev">⏮</text>
+      </view>
+
+      <!-- 播放/暂停 -->
+      <view class="play-btn {{isPlaying ? 'playing' : ''}}" bindtap="togglePlay">
+        <text class="iconfont icon-play">{{isPlaying ? '⏸' : '▶'}}</text>
+      </view>
+
+      <!-- 下一首 -->
+      <view class="control-btn" bindtap="playNext">
+        <text class="iconfont icon-next">⏭</text>
+      </view>
+
+      <!-- 循环播放 -->
+      <view class="control-btn-small {{playMode === 'list' || playMode === 'single' ? 'active' : ''}}" bindtap="togglePlayMode">
+        <text class="iconfont">↻</text>
+      </view>
+    </view>
+
+    <!-- 功能按钮 -->
+    <view class="utility-section">
+      <view class="utility-btn {{isFavorite ? 'active' : ''}}" bindtap="toggleFavorite">
+        <view class="utility-icon-wrapper">
+          <text class="iconfont">{{isFavorite ? '♥' : '♡'}}</text>
+        </view>
+        <text class="utility-text">收藏</text>
+      </view>
+      <view class="utility-btn" bindtap="toggleLyrics">
+        <view class="utility-icon-wrapper">
+          <text class="iconfont">🎵</text>
+        </view>
+        <text class="utility-text">歌词</text>
+      </view>
+      <view class="utility-btn" bindtap="showTimer">
+        <view class="utility-icon-wrapper">
+          <text class="iconfont">⏱</text>
+        </view>
+        <text class="utility-text">定时</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 歌词弹窗 -->
+  <view wx:if="{{showLyrics}}" class="lyrics-modal">
+    <view class="modal-mask" bindtap="toggleLyrics"></view>
+    <view class="lyrics-panel">
+      <view class="lyrics-header">
+        <text class="lyrics-title">歌词</text>
+        <view class="close-btn" bindtap="toggleLyrics">
+          <text class="iconfont">✕</text>
+        </view>
+      </view>
+      <scroll-view class="lyrics-scroll" scroll-y>
+        <view wx:if="{{currentMusic.lyrics && currentMusic.lyrics.length > 0}}">
+          <view class="lyrics-item" wx:for="{{currentMusic.lyrics}}" wx:key="*this">{{item}}</view>
+        </view>
+        <view wx:else class="lyrics-empty">
+          <text>暂无歌词</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 播放列表弹窗 -->
+  <view wx:if="{{showPlayList}}" class="playlist-modal">
+    <view class="modal-mask" bindtap="togglePlayList"></view>
+    <view class="playlist-panel">
+      <view class="playlist-header">
+        <text class="playlist-title">播放列表</text>
+        <text class="playlist-count">共 {{playList.length}} 首</text>
+        <view class="close-btn" bindtap="togglePlayList">
+          <text class="iconfont">✕</text>
+        </view>
+      </view>
+      <scroll-view class="playlist-scroll" scroll-y>
+        <view
+          class="playlist-item {{currentIndex === index ? 'active' : ''}}"
+          wx:for="{{playList}}"
+          wx:key="index"
+          data-index="{{index}}"
+          bindtap="selectMusic"
+        >
+          <view class="item-number">{{index + 1}}</view>
+          <view class="item-info">
+            <view class="item-name">{{item.name}}</view>
+            <view class="item-artist">{{item.artist || item.category || '自然疗愈'}}</view>
+          </view>
+          <view wx:if="{{currentIndex === index && isPlaying}}" class="playing-indicator">
+            <view class="sound-wave">
+              <view class="wave-bar"></view>
+              <view class="wave-bar"></view>
+              <view class="wave-bar"></view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 定时器弹窗 -->
+  <view wx:if="{{showTimerModal}}" class="timer-modal">
+    <view class="modal-mask" bindtap="hideTimer"></view>
+    <view class="timer-panel">
+      <view class="timer-header">
+        <text class="timer-title">定时关闭</text>
+        <view class="close-btn" bindtap="hideTimer">
+          <text class="iconfont">✕</text>
+        </view>
+      </view>
+      <view class="timer-options">
+        <view class="timer-option {{timerValue === 0 ? 'active' : ''}}" data-value="0" bindtap="setTimer">不开启</view>
+        <view class="timer-option {{timerValue === 15 ? 'active' : ''}}" data-value="15" bindtap="setTimer">15 分钟</view>
+        <view class="timer-option {{timerValue === 30 ? 'active' : ''}}" data-value="30" bindtap="setTimer">30 分钟</view>
+        <view class="timer-option {{timerValue === 60 ? 'active' : ''}}" data-value="60" bindtap="setTimer">60 分钟</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部渐变 -->
+  <view class="footer-gradient"></view>
+</view>

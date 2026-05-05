@@ -1,0 +1,153 @@
+<view class="mine-container">
+  <!-- 顶部安全区域 -->
+  <view class="safe-area-top"></view>
+
+  <!-- 内容区域 -->
+  <scroll-view class="content-scroll" scroll-y>
+    <!-- 顶部 Header -->
+    <view class="mine-header-bar">
+      <view class="header-left">
+        <text class="header-icon">🌿</text>
+        <text class="header-title">肇庆疗愈</text>
+      </view>
+      <view class="header-right">
+        <text class="header-notify">🔔</text>
+        <text class="header-settings">⚙️</text>
+      </view>
+    </view>
+
+    <!-- 用户头像区域 -->
+    <view class="user-identity-section">
+      <view class="avatar-wrapper">
+        <image class="user-avatar-img" src="https://gitee.com/su_feng_L/picture/raw/main/音频/音频配图/c190005f2dec85478f848bd09f382cb5.jpg" mode="aspectFill"></image>
+        <view class="verified-badge">
+          <text class="verified-icon">✓</text>
+        </view>
+      </view>
+      <view class="user-name-section">
+        <text class="user-display-name">疗愈专家</text>
+        <view class="user-level-tag">
+          <text class="level-text">疗愈达人</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Bento 网格小组件 -->
+    <view class="bento-widgets">
+      <!-- 每日步数 - 大卡片 -->
+      <view class="bento-card bento-large">
+        <view class="bento-content">
+          <text class="bento-icon-large">🚶</text>
+          <text class="bento-label">每日步数</text>
+          <text class="bento-value">8,432</text>
+        </view>
+        <text class="bento-bg-icon">👣</text>
+        <view class="bento-goal">目标: 10k</view>
+      </view>
+
+      <!-- 心率 -->
+      <view class="bento-card bento-small" bindtap="onHeartRateTap">
+        <view class="bento-header">
+          <text class="bento-icon-small">❤️</text>
+          <text class="bento-live">实时</text>
+        </view>
+        <view class="bento-body">
+          <text class="bento-value-small">72 <text class="bento-unit">BPM</text></text>
+          <text class="bento-desc">静息心率</text>
+        </view>
+      </view>
+
+      <!-- 商店 -->
+      <view class="bento-card bento-small" bindtap="onShopTap">
+        <text class="bento-icon-small">🛍️</text>
+        <view class="bento-body">
+          <text class="bento-title-small">疗愈商店</text>
+          <text class="bento-desc">兑换 1,200 积分</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 疗愈历史 -->
+    <view class="section">
+      <view class="section-header-row">
+        <text class="section-title">疗愈记录</text>
+        <text class="section-more">查看全部</text>
+      </view>
+      <view class="timeline-list">
+        <view class="timeline-item">
+          <view class="timeline-line"></view>
+          <view class="timeline-dot timeline-dot-primary">
+            <text class="timeline-icon">🧘</text>
+          </view>
+          <view class="timeline-card glass-card">
+            <view class="timeline-header">
+              <text class="timeline-title">森林冥想</text>
+              <text class="timeline-time">10:00</text>
+            </view>
+            <text class="timeline-desc">完成20分钟引导冥想课程</text>
+          </view>
+        </view>
+        <view class="timeline-item">
+          <view class="timeline-dot timeline-dot-secondary">
+            <text class="timeline-icon">🍵</text>
+          </view>
+          <view class="timeline-card glass-card">
+            <view class="timeline-header">
+              <text class="timeline-title">茶道仪式</text>
+              <text class="timeline-time">昨天</text>
+            </view>
+            <text class="timeline-desc">晚间白茶正念仪式</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 疗愈食谱 -->
+    <view class="section">
+      <text class="section-title">疗愈食谱</text>
+      <scroll-view class="recipe-scroll" scroll-x>
+        <view class="recipe-card" wx:for="{{recipeList}}" wx:key="index">
+          <image class="recipe-card-image" src="{{item.recipeImage}}" mode="aspectFill"></image>
+          <view class="recipe-card-content">
+            <view class="recipe-card-header">
+              <text class="recipe-card-name">{{item.name}}</text>
+              <text class="recipe-card-icon">⚡</text>
+            </view>
+            <view class="recipe-card-tags">
+              <text class="recipe-tag">{{item.tag1}}</text>
+              <text class="recipe-tag">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 设置列表 -->
+    <view class="settings-section">
+      <view class="settings-item" bindtap="onSettingsTap" data-type="account">
+        <view class="settings-left">
+          <text class="settings-icon">👤</text>
+          <text class="settings-text">账户管理</text>
+        </view>
+        <text class="settings-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onSettingsTap" data-type="privacy">
+        <view class="settings-left">
+          <text class="settings-icon">🔒</text>
+          <text class="settings-text">隐私与安全</text>
+        </view>
+        <text class="settings-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onSettingsTap" data-type="support">
+        <view class="settings-left">
+          <text class="settings-icon">❓</text>
+          <text class="settings-text">帮助中心</text>
+        </view>
+        <text class="settings-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+</view>

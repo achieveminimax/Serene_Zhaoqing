@@ -1,0 +1,94 @@
+<view class="shop-container">
+  <!-- 顶部导航栏 -->
+  <view class="top-app-bar">
+    <view class="header-left">
+      <view class="icon-btn" bindtap="onBackTap">
+        <text class="back-arrow">←</text>
+      </view>
+      <text class="header-title">疗愈商店</text>
+    </view>
+    <view class="header-right">
+      <view class="icon-btn" bindtap="onSearchTap">
+        <text class="nav-icon">🔍</text>
+      </view>
+      <view class="icon-btn" bindtap="onCartTap">
+        <text class="nav-icon">🛍️</text>
+        <view class="cart-badge" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区域 -->
+  <scroll-view class="main-content" scroll-y enhanced show-scrollbar="{{false}}">
+    <!-- Hero 区域 -->
+    <view class="hero-section">
+      <text class="hero-title">精选好物，<text class="hero-highlight">疗愈身心</text></text>
+      <view class="search-prompt">
+        <text class="prompt-icon">✨</text>
+        <text class="prompt-text">寻找身心修复？探索我们的山林疗愈系列</text>
+      </view>
+    </view>
+
+    <!-- 分类标签 -->
+    <scroll-view class="category-tabs" scroll-x show-scrollbar="{{false}}">
+      <view class="tab-list">
+        <view class="tab-item {{currentCategory === 'all' ? 'tab-active' : ''}}" bindtap="onCategoryTap" data-category="all">
+          全部
+        </view>
+        <view class="tab-item {{currentCategory === 'aroma' ? 'tab-active' : ''}}" bindtap="onCategoryTap" data-category="aroma">
+          香薰芳疗
+        </view>
+        <view class="tab-item {{currentCategory === 'tea' ? 'tab-active' : ''}}" bindtap="onCategoryTap" data-category="tea">
+          草本茶饮
+        </view>
+        <view class="tab-item {{currentCategory === 'books' ? 'tab-active' : ''}}" bindtap="onCategoryTap" data-category="books">
+          疗愈书籍
+        </view>
+        <view class="tab-item {{currentCategory === 'ritual' ? 'tab-active' : ''}}" bindtap="onCategoryTap" data-category="ritual">
+          仪式用品
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 商品网格 -->
+    <view class="product-grid">
+      <!-- 普通商品卡片 -->
+      <view class="product-card {{item.featured ? 'card-featured' : ''}}" wx:for="{{productList}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+        <view class="card-image-wrapper">
+          <image class="card-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="card-badge" wx:if="{{item.badge}}">{{item.badge}}</view>
+        </view>
+        <view class="card-content">
+          <text class="card-name">{{item.name}}</text>
+          <view class="card-footer">
+            <text class="card-price">¥{{item.price}}</text>
+            <view class="add-btn" catchtap="onAddToCart" data-id="{{item.id}}">
+              <text class="add-icon">+</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 特色商品横幅 -->
+    <view class="featured-banner" bindtap="onFeaturedTap">
+      <view class="banner-image-wrapper">
+        <image class="banner-image" src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?w=400" mode="aspectFill"></image>
+      </view>
+      <view class="banner-content">
+        <view class="banner-header">
+          <text class="banner-tag">收藏精选</text>
+          <text class="banner-price">¥1,280</text>
+        </view>
+        <text class="banner-title">肇庆铜制颂钵</text>
+        <text class="banner-desc">432Hz共振频率，深度细胞疗愈与山林灵气调和</text>
+        <view class="banner-btn">
+          <text class="btn-text">加入购物车</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+</view>

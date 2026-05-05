@@ -1,0 +1,106 @@
+/* 底部导航栏 - 参考 mobile_1/2/3 风格 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 16rpx 64rpx 48rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(40rpx);
+  -webkit-backdrop-filter: blur(40rpx);
+  border-radius: 48rpx 48rpx 0 0;
+  box-shadow: 0 -8rpx 80rpx -24rpx rgba(0, 0, 0, 0.08);
+  transform: translateY(200rpx);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 导航项 */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 32rpx;
+  border-radius: 48rpx;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* 激活状态 - emerald 渐变背景 */
+.nav-active {
+  background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+  box-shadow: 0 8rpx 32rpx rgba(5, 150, 105, 0.3);
+  transform: scale(1.1);
+}
+
+/* 未激活状态 */
+.nav-inactive {
+  background: transparent;
+}
+
+.nav-inactive:active {
+  transform: scale(0.95);
+}
+
+/* 图标包装 */
+.nav-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图标 */
+.nav-icon {
+  font-size: 40rpx;
+  transition: all 0.3s ease;
+}
+
+.icon-active {
+  filter: brightness(0) invert(1);
+}
+
+/* 文字 */
+.nav-text {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 22rpx;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 8rpx;
+  color: #065f46;
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.nav-inactive:hover .nav-text {
+  opacity: 0.8;
+  color: #059669;
+}
+
+/* 适配 iPhone 底部安全区域 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-nav {
+    padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .bottom-nav {
+    background: rgba(15, 23, 42, 0.6);
+  }
+  
+  .nav-text {
+    color: #a7f3d0;
+  }
+}

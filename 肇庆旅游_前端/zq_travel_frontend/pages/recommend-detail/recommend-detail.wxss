@@ -1,0 +1,277 @@
+page {
+  height: 100%;
+  overflow: hidden;
+}
+
+.detail-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, #f8faf8 0%, #f5f7f5 40%, #fafcf9 70%, #f2f5f2 100%);
+  position: relative;
+}
+
+/* 加载状态 */
+.loading-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24rpx;
+}
+
+.loading-spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 6rpx solid rgba(143, 180, 143, 0.2);
+  border-top-color: #8FB48F;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #7B8B9A;
+}
+
+/* 内容滚动区域 */
+.content-scroll {
+  flex: 1;
+  height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 顶部大图区域 */
+.hero-section {
+  position: relative;
+  height: 500rpx;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, 
+    rgba(0,0,0,0.2) 0%, 
+    rgba(0,0,0,0.3) 30%,
+    rgba(0,0,0,0.2) 50%,
+    transparent 70%
+  );
+}
+
+/* 图片底部融合效果 - 从底部向上渐变 */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 250rpx;
+  background: linear-gradient(0deg, 
+    rgba(248, 250, 248, 1) 0%,
+    rgba(248, 250, 248, 0.9) 20%,
+    rgba(248, 250, 248, 0.6) 50%,
+    rgba(248, 250, 248, 0.2) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 48rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.hero-decoration {
+  font-size: 60rpx;
+  margin-bottom: 8rpx;
+}
+
+.hero-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.3);
+  letter-spacing: 2rpx;
+}
+
+.hero-subtitle {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1rpx 4rpx rgba(0,0,0,0.2);
+  letter-spacing: 1rpx;
+}
+
+/* 景点信息卡片 */
+.info-card {
+  margin: -60rpx 32rpx 32rpx;
+  padding: 36rpx;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%);
+  border-radius: 32rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.05), 0 4rpx 10rpx rgba(0, 0, 0, 0.02), inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(30rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
+  position: relative;
+  z-index: 10;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.info-emoji {
+  font-size: 64rpx;
+}
+
+.info-title-group {
+  flex: 1;
+}
+
+.info-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #5D7A5D;
+  margin-bottom: 8rpx;
+  letter-spacing: 1rpx;
+}
+
+.info-subtitle {
+  font-size: 26rpx;
+  color: #7B8B9A;
+  letter-spacing: 1rpx;
+}
+
+.info-desc {
+  font-size: 30rpx;
+  color: #5D7A5D;
+  line-height: 1.8;
+  margin-bottom: 24rpx;
+  text-align: justify;
+}
+
+.info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.tag {
+  padding: 12rpx 24rpx;
+  background: linear-gradient(135deg, rgba(143, 180, 143, 0.15) 0%, rgba(143, 180, 143, 0.08) 100%);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #5D7A5D;
+  border: 1rpx solid rgba(143, 180, 143, 0.2);
+}
+
+/* 详细信息区块 */
+.sections-container {
+  padding: 0 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.section-block {
+  padding: 32rpx;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 100%);
+  border-radius: 24rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.05), 0 4rpx 10rpx rgba(0, 0, 0, 0.02), inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(30rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #5D7A5D;
+  margin-bottom: 20rpx;
+  letter-spacing: 1rpx;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.section-item {
+  font-size: 28rpx;
+  color: #5D7A5D;
+  line-height: 1.6;
+  padding-left: 16rpx;
+  border-left: 4rpx solid rgba(143, 180, 143, 0.3);
+}
+
+/* 底部操作栏 */
+.bottom-actions {
+  padding: 32rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  padding: 28rpx 64rpx;
+  border-radius: 48rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.action-button.primary {
+  background: linear-gradient(135deg, #8FB48F 0%, #7B8B9A 100%);
+  color: #fff;
+}
+
+.action-button:active {
+  transform: scale(0.97);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.btn-icon {
+  font-size: 36rpx;
+}
+
+.btn-text {
+  letter-spacing: 2rpx;
+}
+
+/* 底部留白 */
+.bottom-spacer {
+  height: 60rpx;
+}

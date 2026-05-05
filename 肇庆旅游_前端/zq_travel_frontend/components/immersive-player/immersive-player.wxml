@@ -1,0 +1,68 @@
+<view class="immersive-player {{show ? 'player-show' : ''}}">
+  <!-- 背景层 -->
+  <view class="player-bg">
+    <image wx:if="{{cover}}" class="player-bg-image" src="{{cover}}" mode="aspectFill"></image>
+    <view class="player-bg-blur"></view>
+    <view class="player-bg-overlay"></view>
+  </view>
+  
+  <!-- 内容层 -->
+  <view class="player-content">
+    <!-- 顶部导航 -->
+    <view class="player-nav">
+      <view class="nav-btn" bindtap="onClose">
+        <text class="icon icon-arrow-down"></text>
+      </view>
+      <view class="nav-title">{{title}}</view>
+      <view class="nav-btn" bindtap="onMore">
+        <text class="icon icon-more"></text>
+      </view>
+    </view>
+    
+    <!-- 唱片区域 -->
+    <view class="player-disc-area">
+      <view class="player-disc {{isPlaying ? 'disc-rotate' : ''}}">
+        <image wx:if="{{cover}}" class="disc-image" src="{{cover}}" mode="aspectFill"></image>
+        <view wx:else class="disc-placeholder">
+          <text class="icon icon-music icon-xl"></text>
+        </view>
+      </view>
+      <!-- 声波动画 -->
+      <view class="sound-waves" wx:if="{{isPlaying}}">
+        <view wx:for="{{5}}" wx:key="*this" class="wave-bar" style="animation-delay: {{index * 0.1}}s"></view>
+      </view>
+    </view>
+    
+    <!-- 歌曲信息 -->
+    <view class="player-info">
+      <text class="player-song-name">{{songName}}</text>
+      <text class="player-artist">{{artist}}</text>
+    </view>
+    
+    <!-- 进度条 -->
+    <view class="player-progress">
+      <text class="progress-time">{{currentTime}}</text>
+      <slider class="progress-slider" value="{{progress}}" bindchange="onProgressChange" block-size="12" activeColor="#fff" backgroundColor="rgba(255,255,255,0.3)"></slider>
+      <text class="progress-time">{{duration}}</text>
+    </view>
+    
+    <!-- 控制按钮 -->
+    <view class="player-controls">
+      <view class="control-btn" bindtap="onModeChange">
+        <text class="icon icon-{{playMode}}"></text>
+      </view>
+      <view class="control-btn control-prev" bindtap="onPrev">
+        <text class="icon icon-arrow-left"></text>
+      </view>
+      <view class="control-btn control-play" bindtap="onPlayToggle">
+        <text class="icon icon-{{isPlaying ? 'pause' : 'play'}}"></text>
+      </view>
+      <view class="control-btn control-next" bindtap="onNext">
+        <text class="icon icon-arrow-right"></text>
+      </view>
+      <view class="control-btn" bindtap="onPlaylist">
+        <text class="icon icon-list"></text>
+      </view>
+    </view>
+  </view>
+</view>

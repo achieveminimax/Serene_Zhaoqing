@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "AI 助手",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#ffffff",
+  "usingComponents": {
+    "markdown-render": "/components/markdown-render/markdown-render"
+  }
+}

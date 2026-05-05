@@ -1,0 +1,7 @@
+<view class="custom-icon-wrapper" style="width: {{size}}px; height: {{size}}px;">
+  <canvas
+    canvas-id="{{iconId}}"
+    style="width: {{size}}px; height: {{size}}px;"
+    class="icon-canvas"
+  ></canvas>
+</view>

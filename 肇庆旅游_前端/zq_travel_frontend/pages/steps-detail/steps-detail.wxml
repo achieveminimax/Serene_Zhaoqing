@@ -1,0 +1,176 @@
+<view class="steps-detail-container">
+  <!-- 顶部导航栏 -->
+  <view class="top-header">
+    <view class="header-content">
+      <view class="back-btn" bindtap="onBack">
+        <text class="nav-icon">←</text>
+      </view>
+      <view class="header-title">每日步数</view>
+      <view class="more-btn" bindtap="onMoreTap">
+        <text class="nav-icon">⋮</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区 -->
+  <scroll-view class="main-content" scroll-y>
+    <!-- 环形进度区 -->
+    <view class="progress-section">
+      <view class="progress-circle-wrapper">
+        <!-- 外圈辉光效果 -->
+        <view class="progress-glow"></view>
+        <!-- SVG 环形进度 -->
+        <svg class="progress-svg" viewBox="0 0 200 200">
+          <!-- 滤镜定义 -->
+          <defs>
+            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#076c59"/>
+              <stop offset="50%" stop-color="#0d9488"/>
+              <stop offset="100%" stop-color="#a0f3da"/>
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- 背景圆环 -->
+          <circle class="track-circle" cx="100" cy="100" r="85" fill="none" stroke="#e1eae7" stroke-width="12"/>
+          <!-- 进度圆环 -->
+          <circle class="progress-circle" cx="100" cy="100" r="85" fill="none" stroke="url(#progressGradient)" stroke-width="12" stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="{{strokeDashoffset}}" transform="rotate(-90 100 100)" filter="url(#glow)"/>
+        </svg>
+        <!-- 中心内容 -->
+        <view class="circle-content">
+          <text class="steps-value">{{steps}}</text>
+          <text class="steps-label">目标 {{goal}}</text>
+        </view>
+      </view>
+      <!-- 提示语 -->
+      <view class="progress-tip glass-panel">
+        <text class="tip-text">今日轻盈漫步，身心舒畅</text>
+      </view>
+    </view>
+
+    <!-- 数据统计网格 (Bento Style) -->
+    <view class="stats-grid">
+      <view class="stat-card glass-panel">
+        <view class="stat-icon-wrapper">
+          <text class="stat-icon">🔥</text>
+        </view>
+        <view class="stat-content">
+          <text class="stat-value">{{calories}}</text>
+          <text class="stat-label">消耗热量</text>
+        </view>
+      </view>
+      <view class="stat-card glass-panel">
+        <view class="stat-icon-wrapper">
+          <text class="stat-icon">📍</text>
+        </view>
+        <view class="stat-content">
+          <text class="stat-value">{{distance}}</text>
+          <text class="stat-label">步行距离</text>
+        </view>
+      </view>
+      <view class="stat-card glass-panel">
+        <view class="stat-icon-wrapper">
+          <text class="stat-icon">⏱️</text>
+        </view>
+        <view class="stat-content">
+          <text class="stat-value">{{duration}}</text>
+          <text class="stat-label">步行时长</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 步数趋势 -->
+    <view class="trends-section">
+      <view class="section-header">
+        <text class="section-title">步数趋势</text>
+        <text class="section-desc">最近7天</text>
+      </view>
+      <view class="chart-card glass-panel">
+        <!-- SVG 折线图 -->
+        <view class="chart-wrapper">
+          <svg class="trend-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+            <!-- 渐变区域 -->
+            <defs>
+              <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#076c59" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#076c59" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <!-- 填充区域 -->
+            <path class="area-path" d="M0,80 Q30,70 50,75 T100,50 T150,60 T200,40 T250,45 T300,20 L300,100 L0,100 Z" fill="url(#areaGradient)"/>
+            <!-- 折线 -->
+            <path class="line-path" d="M0,80 Q30,70 50,75 T100,50 T150,60 T200,40 T250,45 T300,20" fill="none" stroke="#076c59" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- 数据点 -->
+            <circle cx="0" cy="80" r="3" fill="#076c59"/>
+            <circle cx="50" cy="75" r="3" fill="#076c59"/>
+            <circle cx="100" cy="50" r="3" fill="#076c59"/>
+            <circle cx="150" cy="60" r="3" fill="#076c59"/>
+            <circle cx="200" cy="40" r="3" fill="#076c59"/>
+            <circle cx="250" cy="45" r="3" fill="#076c59"/>
+            <circle cx="300" cy="20" r="4" fill="#076c59" class="active-point"/>
+          </svg>
+        </view>
+        <!-- 星期标签 -->
+        <view class="week-labels">
+          <text class="week-label" wx:for="{{weekDays}}" wx:key="index">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 疗愈路线推荐 -->
+    <view class="routes-section">
+      <text class="section-title">疗愈路线推荐</text>
+      <view class="routes-list">
+        <view class="route-card glass-panel" wx:for="{{routes}}" wx:key="index" bindtap="onRouteTap" data-index="{{index}}">
+          <image class="route-bg-image" src="{{item.image}}" mode="aspectFill"/>
+          <view class="route-overlay"></view>
+          <view class="route-content">
+            <text class="route-name">{{item.name}}</text>
+            <view class="route-info">
+              <view class="info-item">
+                <text class="info-icon">📍</text>
+                <text class="info-text">{{item.distance}}</text>
+              </view>
+              <view class="info-item">
+                <text class="info-icon">⏱️</text>
+                <text class="info-text">{{item.time}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="route-arrow-btn">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 健康概览 -->
+    <view class="health-section">
+      <text class="section-title">健康概览</text>
+      <scroll-view class="health-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="health-cards">
+          <view class="health-card glass-panel" wx:for="{{healthData}}" wx:key="index">
+            <view class="health-icon-wrapper">
+              <text class="health-icon">{{item.icon}}</text>
+            </view>
+            <view class="health-content">
+              <view class="health-value-row">
+                <text class="health-value">{{item.value}}</text>
+                <text class="health-unit">{{item.unit}}</text>
+              </view>
+              <text class="health-label">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+</view>

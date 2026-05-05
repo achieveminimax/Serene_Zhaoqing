@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "timeline": "/components/timeline/timeline"
+  },
+  "navigationBarTitleText": "我的",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "backgroundTextStyle": "dark"
+}

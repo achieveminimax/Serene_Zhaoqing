@@ -1,0 +1,120 @@
+<view class="search-container">
+  <!-- 顶部导航栏 -->
+  <view class="top-header">
+    <view class="header-content">
+      <view class="back-btn" bindtap="onBack">
+        <text class="iconfont icon-arrow-left">←</text>
+      </view>
+      <view class="header-title">搜索</view>
+      <view class="filter-btn" bindtap="onFilterTap">
+        <text class="iconfont icon-filter">⚙</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区 -->
+  <view class="main-content">
+    <!-- 搜索框 -->
+    <view class="search-bar-section">
+      <view class="search-bar">
+        <view class="search-icon">
+          <text class="iconfont icon-search">🔍</text>
+        </view>
+        <input
+          class="search-input"
+          placeholder="寻找宁静与平和..."
+          value="{{searchText}}"
+          bindinput="onSearchInput"
+          bindconfirm="onSearch"
+          focus="{{true}}"
+        />
+        <view wx:if="{{searchText}}" class="clear-btn" bindtap="onClearSearch">
+          <text class="iconfont icon-close">✕</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近搜索 -->
+    <view class="history-section">
+      <view class="section-header">
+        <text class="section-title">最近搜索</text>
+        <view class="clear-all-btn" bindtap="onClearHistory">清除全部</view>
+      </view>
+      <view class="history-tags">
+        <view
+          wx:for="{{recentSearches}}"
+          wx:key="index"
+          class="history-chip glass-card"
+          bindtap="onHistoryTap"
+          data-text="{{item}}"
+        >
+          <text class="chip-text">{{item}}</text>
+          <view class="chip-close" bindtap="onDeleteHistory" data-index="{{index}}" catchtap="onDeleteHistory">
+            <text class="iconfont icon-close-small">✕</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 热门搜索 -->
+    <view class="trending-section">
+      <view class="section-header">
+        <text class="section-title">热门搜索</text>
+      </view>
+      <view class="trending-tags">
+        <view
+          wx:for="{{trendingSearches}}"
+          wx:key="index"
+          class="trending-chip {{item.bgClass}}"
+          bindtap="onTrendingTap"
+          data-text="{{item.text}}"
+        >
+          <text wx:if="{{item.trending}}" class="trending-icon">📈</text>
+          <text class="chip-text">{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 猜你喜欢 -->
+    <view class="suggested-section">
+      <view class="section-header">
+        <text class="section-title">猜你喜欢</text>
+      </view>
+      <view class="suggested-grid">
+        <!-- 大卡片 -->
+        <view class="suggested-card featured-card" bindtap="onSuggestedTap" data-item="{{suggestedItems[0]}}">
+          <image class="featured-image" src="{{suggestedItems[0].image}}" mode="aspectFill"></image>
+          <view class="featured-overlay"></view>
+          <view class="featured-content">
+            <view class="featured-tag">{{suggestedItems[0].tag}}</view>
+            <text class="featured-title">{{suggestedItems[0].title}}</text>
+            <text class="featured-desc">{{suggestedItems[0].desc}}</text>
+          </view>
+        </view>
+
+        <!-- 小卡片 -->
+        <view
+          wx:for="{{suggestedItems}}"
+          wx:key="id"
+          wx:if="{{index > 0}}"
+          class="suggested-card small-card surface-low"
+          bindtap="onSuggestedTap"
+          data-item="{{item}}"
+        >
+          <view class="small-card-header">
+            <view class="small-card-icon {{item.iconBgClass}}">
+              <text class="icon-emoji">{{item.icon}}</text>
+            </view>
+            <view class="small-card-more">
+              <text class="iconfont icon-more">⋮</text>
+            </view>
+          </view>
+          <view class="small-card-content">
+            <text class="small-card-title">{{item.title}}</text>
+            <text class="small-card-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,148 @@
+<view class="hr-container">
+  <!-- 顶部导航栏 -->
+  <view class="top-app-bar">
+    <view class="header-left">
+      <view class="icon-btn" bindtap="onBackTap">
+        <text class="back-arrow">←</text>
+      </view>
+      <text class="header-title">心率健康</text>
+    </view>
+  </view>
+
+  <!-- 主内容区域 -->
+  <scroll-view class="main-content" scroll-y enhanced show-scrollbar="{{false}}">
+    <!-- Hero 区域 -->
+    <view class="hero-section">
+      <view class="heart-display">
+        <view class="heart-icon-wrapper {{isMeasuring ? 'pulse-soft' : ''}}">
+          <text class="heart-icon">❤️</text>
+        </view>
+        <view class="heart-rate-value-section">
+          <view class="heart-rate-number">
+            <text class="hr-value">{{currentHeartRate}}</text>
+            <text class="hr-unit">BPM</text>
+          </view>
+          <text class="hr-status">状态：{{heartRateStatus.text}}</text>
+        </view>
+      </view>
+      
+      <!-- 今日范围卡片 -->
+      <view class="range-card">
+        <view class="range-item">
+          <text class="range-label">今日范围</text>
+          <text class="range-value">{{todayStats.min}} - {{todayStats.max}} BPM</text>
+        </view>
+        <view class="range-divider"></view>
+        <view class="range-item">
+          <text class="range-label">最近测量</text>
+          <text class="range-value">{{measureTime}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图表区域 -->
+    <view class="chart-section">
+      <view class="section-header">
+        <text class="section-title">24小时趋势</text>
+        <text class="section-badge">正常</text>
+      </view>
+      <view class="chart-card">
+        <!-- SVG 图表 -->
+        <view class="chart-wrapper">
+          <svg class="chart-svg" viewBox="0 0 400 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#076c59;stop-opacity:0.2" />
+                <stop offset="50%" style="stop-color:#a0f3da;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#076c59;stop-opacity:0.2" />
+              </linearGradient>
+            </defs>
+            <path d="M0,80 C50,75 80,40 120,50 C160,60 200,20 240,35 C280,50 320,65 360,40 C400,20 400,20 400,20" 
+                  fill="none" stroke="url(#chartGradient)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </view>
+        <!-- X轴标签 -->
+        <view class="chart-labels">
+          <text class="chart-label">凌晨</text>
+          <text class="chart-label">早晨</text>
+          <text class="chart-label">中午</text>
+          <text class="chart-label">下午</text>
+          <text class="chart-label">现在</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计网格 -->
+    <view class="stats-grid">
+      <view class="stat-card">
+        <view class="stat-header">
+          <text class="stat-icon">🌙</text>
+          <text class="stat-label">静息心率</text>
+        </view>
+        <view class="stat-value-section">
+          <text class="stat-value">{{todayStats.min}}</text>
+          <text class="stat-unit">BPM 平均</text>
+        </view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-header">
+          <text class="stat-icon">〰️</text>
+          <text class="stat-label">心率变异性</text>
+        </view>
+        <view class="stat-value-section">
+          <text class="stat-value">48</text>
+          <text class="stat-unit">ms 波动</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 疗愈建议 -->
+    <view class="suggestion-section">
+      <text class="section-title">疗愈建议</text>
+      <view class="suggestion-card">
+        <view class="suggestion-icon-wrapper">
+          <text class="suggestion-icon">🧘</text>
+        </view>
+        <view class="suggestion-content">
+          <text class="suggestion-text">您的心率今天很稳定。进行10分钟冥想有助于保持这种平静状态。</text>
+          <view class="suggestion-btn" bindtap="onStartBreathing">
+            <text class="btn-text">开始呼吸练习</text>
+            <text class="btn-arrow">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 历史记录 -->
+    <view class="history-section">
+      <view class="section-header-row">
+        <text class="section-title">最近记录</text>
+        <text class="view-all" bindtap="onViewMoreHistory">查看全部</text>
+      </view>
+      <view class="history-list">
+        <view class="history-item" wx:for="{{historyList}}" wx:key="index">
+          <view class="history-left">
+            <view class="history-icon-wrapper">
+              <text class="history-icon">⏰</text>
+            </view>
+            <view class="history-info">
+              <text class="history-value">{{item.value}} BPM</text>
+              <text class="history-desc">{{item.desc}}</text>
+            </view>
+          </view>
+          <text class="history-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 测量按钮 -->
+    <view class="measure-section">
+      <view class="measure-btn {{isMeasuring ? 'measuring' : ''}}" bindtap="onMeasureTap">
+        <text class="measure-btn-text">{{isMeasuring ? '测量中...' : '开始测量'}}</text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+</view>

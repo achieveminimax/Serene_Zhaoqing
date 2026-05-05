@@ -1,0 +1,609 @@
+/* ============================================
+   疗愈食谱详情页 - Material Design 3 风格
+   ============================================ */
+
+/* Material Design 3 颜色系统 */
+:root {
+  --primary: #076c59;
+  --on-primary: #e4fff4;
+  --primary-container: #a0f3da;
+  --on-primary-container: #005d4c;
+  --secondary: #34628c;
+  --on-secondary: #f7f9ff;
+  --secondary-container: #cfe5ff;
+  --on-secondary-container: #24557d;
+  --tertiary: #6e5a58;
+  --tertiary-container: #fde2df;
+  --on-tertiary-container: #64514f;
+  --surface: #f6faf8;
+  --surface-container: #e8f0ed;
+  --surface-container-low: #eff5f3;
+  --surface-container-high: #e1eae7;
+  --surface-variant: #dae5e2;
+  --on-surface: #2a3433;
+  --on-surface-variant: #57615f;
+  --outline: #727d7b;
+  --outline-variant: #a9b4b2;
+  --error: #a83836;
+  --error-container: #fa746f;
+  --background: #f6faf8;
+}
+
+page {
+  height: 100%;
+  background-color: var(--background);
+}
+
+/* ============================================
+   容器与滚动
+   ============================================ */
+.recipe-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(160, 243, 218, 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 0% 100%, rgba(207, 229, 255, 0.4) 0%, transparent 40%),
+    var(--background);
+}
+
+.content-scroll {
+  flex: 1;
+  height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   加载状态
+   ============================================ */
+.loading-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24rpx;
+}
+
+.loading-spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 6rpx solid rgba(7, 108, 89, 0.15);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: var(--on-surface-variant);
+}
+
+/* ============================================
+   顶部导航栏 (AppBar)
+   ============================================ */
+.app-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.app-bar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12rpx 24rpx;
+  height: 88rpx;
+}
+
+.app-bar-btn {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: opacity 0.3s;
+}
+
+.app-bar-btn:active {
+  opacity: 0.7;
+  background: rgba(7, 108, 89, 0.08);
+}
+
+.app-bar-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.5rpx;
+}
+
+/* Material Icons 样式 */
+.material-icon {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 48rpx;
+  color: var(--primary);
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-icon.icon-sm {
+  font-size: 32rpx;
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 560rpx;
+  overflow: hidden;
+  margin-top: calc(env(safe-area-inset-top) + 88rpx);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(246, 250, 248, 0) 0%,
+    rgba(246, 250, 248, 0.3) 50%,
+    rgba(246, 250, 248, 0.95) 100%
+  );
+}
+
+/* ============================================
+   浮动标题卡片
+   ============================================ */
+.floating-card {
+  margin: -96rpx 48rpx 32rpx;
+  padding: 48rpx 40rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(48rpx);
+  -webkit-backdrop-filter: blur(48rpx);
+  border-radius: 32rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 20rpx 100rpx rgba(7, 108, 89, 0.1),
+    0 8rpx 32rpx rgba(7, 108, 89, 0.05);
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.recipe-name {
+  display: block;
+  font-size: 52rpx;
+  font-weight: 800;
+  color: var(--primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -1rpx;
+  margin-bottom: 16rpx;
+}
+
+.recipe-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+  letter-spacing: 2rpx;
+  margin-bottom: 32rpx;
+}
+
+/* 快速信息芯片 */
+.quick-info {
+  display: flex;
+  justify-content: center;
+  gap: 20rpx;
+  margin-bottom: 32rpx;
+  flex-wrap: wrap;
+}
+
+.info-chip {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 28rpx;
+  background: var(--surface-container-low);
+  border-radius: 100rpx;
+}
+
+.chip-text {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 2rpx;
+}
+
+/* 标签 */
+.recipe-tags {
+  display: flex;
+  justify-content: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 12rpx 28rpx;
+  background: var(--secondary-container);
+  border-radius: 100rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--on-secondary-container);
+}
+
+/* ============================================
+   内容区域
+   ============================================ */
+.content-area {
+  padding: 0 48rpx;
+}
+
+.section {
+  margin-bottom: 48rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 28rpx;
+}
+
+.section-indicator {
+  width: 8rpx;
+  height: 40rpx;
+  background: var(--primary);
+  border-radius: 4rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--on-surface);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ============================================
+   健康益处
+   ============================================ */
+.benefits-scroll {
+  width: 100%;
+}
+
+.benefits-container {
+  display: flex;
+  flex-direction: row;
+  gap: 24rpx;
+  padding-right: 48rpx;
+}
+
+.benefit-card {
+  flex-shrink: 0;
+  width: 480rpx;
+  padding: 36rpx 28rpx;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.4);
+}
+
+.benefit-icon {
+  display: block;
+  font-size: 56rpx;
+  margin-bottom: 20rpx;
+}
+
+.benefit-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 12rpx;
+}
+
+.benefit-desc {
+  display: block;
+  font-size: 26rpx;
+  color: var(--on-surface-variant);
+  line-height: 1.6;
+}
+
+/* ============================================
+   食材清单
+   ============================================ */
+.ingredients-container {
+  padding: 32rpx;
+  background: var(--surface-container-low);
+  border-radius: 28rpx;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid rgba(169, 180, 178, 0.15);
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ingredient-item:first-child {
+  padding-top: 0;
+}
+
+.ingredient-left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.ingredient-icon {
+  width: 72rpx;
+  height: 72rpx;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.ingredient-icon .material-icon {
+  font-size: 36rpx;
+}
+
+.ingredient-icon.emoji-icon {
+  font-size: 40rpx;
+}
+
+.ingredient-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.ingredient-amount {
+  font-size: 28rpx;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+/* ============================================
+   制作步骤
+   ============================================ */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.step-item {
+  display: flex;
+  gap: 28rpx;
+  padding: 24rpx 0;
+}
+
+.step-number {
+  width: 64rpx;
+  height: 64rpx;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+  padding-bottom: 32rpx;
+  border-bottom: 2rpx solid rgba(7, 108, 89, 0.08);
+}
+
+.step-item:last-child .step-content {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.step-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 12rpx;
+}
+
+.step-desc {
+  display: block;
+  font-size: 28rpx;
+  color: var(--on-surface-variant);
+  line-height: 1.7;
+}
+
+/* ============================================
+   营养成分
+   ============================================ */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.nutrition-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  padding: 32rpx 16rpx;
+  background: rgba(7, 108, 89, 0.06);
+  border-radius: 24rpx;
+}
+
+.nutrition-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.nutrition-label {
+  font-size: 24rpx;
+  color: var(--on-surface-variant);
+}
+
+/* ============================================
+   小贴士
+   ============================================ */
+.tips-section {
+  margin-top: 32rpx;
+  padding: 36rpx;
+  background: linear-gradient(135deg, rgba(253, 226, 223, 0.6) 0%, rgba(238, 212, 209, 0.4) 100%);
+  border-radius: 28rpx;
+  border: 1rpx solid rgba(253, 226, 223, 0.6);
+}
+
+.tips-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.tips-icon {
+  font-size: 40rpx;
+  color: var(--tertiary);
+}
+
+.tips-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--on-tertiary-container);
+}
+
+.tips-content {
+  display: block;
+  font-size: 28rpx;
+  color: var(--on-tertiary-container);
+  line-height: 1.7;
+}
+
+/* ============================================
+   底部留白
+   ============================================ */
+.bottom-spacer {
+  height: 200rpx;
+}
+
+/* ============================================
+   浮动操作按钮 (FAB)
+   ============================================ */
+.fab-container {
+  position: fixed;
+  bottom: 48rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.fab-btn {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 32rpx 64rpx;
+  background: linear-gradient(135deg, var(--primary) 0%, #0a8f75 50%, var(--primary-container) 100%);
+  border-radius: 100rpx;
+  box-shadow: 
+    0 12rpx 40rpx rgba(7, 108, 89, 0.35),
+    0 4rpx 16rpx rgba(7, 108, 89, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fab-btn:active {
+  transform: scale(0.96);
+  box-shadow: 
+    0 8rpx 28rpx rgba(7, 108, 89, 0.3),
+    0 2rpx 10rpx rgba(7, 108, 89, 0.15);
+}
+
+.fab-icon {
+  font-size: 44rpx;
+  color: #fff;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fab-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1rpx;
+}
+
+/* ============================================
+   滚动条隐藏
+   ============================================ */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ============================================
+   响应式适配
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .recipe-container {
+    background: 
+      radial-gradient(circle at 100% 0%, rgba(160, 243, 218, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(207, 229, 255, 0.15) 0%, transparent 40%),
+      #0a0f0e;
+  }
+  
+  .floating-card,
+  .benefit-card {
+    background: rgba(42, 52, 51, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .ingredients-container {
+    background: rgba(42, 52, 51, 0.8);
+  }
+  
+  .ingredient-icon {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .nutrition-item {
+    background: rgba(160, 243, 218, 0.1);
+  }
+}

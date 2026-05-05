@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "食谱详情",
+  "navigationBarBackgroundColor": "#f6faf8",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#f6faf8",
+  "navigationStyle": "custom",
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true,
+  "usingComponents": {}
+}

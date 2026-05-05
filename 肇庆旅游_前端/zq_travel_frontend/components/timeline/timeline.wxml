@@ -1,0 +1,31 @@
+<view class="timeline">
+  <view 
+    wx:for="{{items}}" 
+    wx:key="index"
+    class="timeline-item {{item.highlight ? 'timeline-highlight' : ''}}"
+  >
+    <!-- 时间轴节点 -->
+    <view class="timeline-node">
+      <view class="timeline-dot {{item.active ? 'timeline-dot-active' : ''}}"></view>
+      <view class="timeline-line" wx:if="{{index !== items.length - 1}}"></view>
+    </view>
+    
+    <!-- 内容卡片 -->
+    <view class="timeline-content">
+      <view class="timeline-time" wx:if="{{item.time}}">
+        <text class="timeline-date">{{item.date}}</text>
+        <text class="timeline-hour">{{item.time}}</text>
+      </view>
+      <view class="timeline-card" bindtap="onItemTap" data-index="{{index}}">
+        <view class="timeline-header">
+          <text class="timeline-title">{{item.title}}</text>
+          <text class="timeline-status {{item.status}}" wx:if="{{item.status}}">{{item.statusText}}</text>
+        </view>
+        <text class="timeline-desc" wx:if="{{item.desc}}">{{item.desc}}</text>
+        <view class="timeline-footer" wx:if="{{item.footer}}">
+          <text>{{item.footer}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
