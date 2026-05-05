@@ -1,7 +1,6 @@
 package com.zqtravel.common.core.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +19,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(description = "统一API响应格式")
 public class ApiResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,25 +26,21 @@ public class ApiResponse<T> implements Serializable {
     /**
      * 响应状态码
      */
-    @Schema(description = "响应状态码", example = "200")
     private String code;
 
     /**
      * 响应消息
      */
-    @Schema(description = "响应消息", example = "success")
     private String message;
 
     /**
      * 响应数据
      */
-    @Schema(description = "响应数据")
     private T data;
 
     /**
      * 响应时间戳
      */
-    @Schema(description = "响应时间戳", example = "1746451200")
     private Long timestamp;
 
     /**

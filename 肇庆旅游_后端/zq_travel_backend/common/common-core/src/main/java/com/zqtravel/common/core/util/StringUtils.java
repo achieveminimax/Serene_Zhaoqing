@@ -1,7 +1,6 @@
 package com.zqtravel.common.core.util;
 
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils as ApacheStringUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +23,7 @@ public class StringUtils {
      * @return 是否为空
      */
     public static boolean isEmpty(CharSequence str) {
-        return ApacheStringUtils.isEmpty(str);
+        return org.apache.commons.lang3.StringUtils.isEmpty(str);
     }
 
     /**
@@ -34,7 +33,7 @@ public class StringUtils {
      * @return 是否不为空
      */
     public static boolean isNotEmpty(CharSequence str) {
-        return ApacheStringUtils.isNotEmpty(str);
+        return org.apache.commons.lang3.StringUtils.isNotEmpty(str);
     }
 
     /**
@@ -44,7 +43,7 @@ public class StringUtils {
      * @return 是否为空白
      */
     public static boolean isBlank(CharSequence str) {
-        return ApacheStringUtils.isBlank(str);
+        return org.apache.commons.lang3.StringUtils.isBlank(str);
     }
 
     /**
@@ -54,7 +53,7 @@ public class StringUtils {
      * @return 是否不为空白
      */
     public static boolean isNotBlank(CharSequence str) {
-        return ApacheStringUtils.isNotBlank(str);
+        return org.apache.commons.lang3.StringUtils.isNotBlank(str);
     }
 
     /**
@@ -64,7 +63,7 @@ public class StringUtils {
      * @return 去除空白后的字符串
      */
     public static String trim(String str) {
-        return ApacheStringUtils.trim(str);
+        return org.apache.commons.lang3.StringUtils.trim(str);
     }
 
     /**
@@ -74,7 +73,7 @@ public class StringUtils {
      * @return 去除空白后的字符串
      */
     public static String trimToNull(String str) {
-        return ApacheStringUtils.trimToNull(str);
+        return org.apache.commons.lang3.StringUtils.trimToNull(str);
     }
 
     /**
@@ -84,7 +83,7 @@ public class StringUtils {
      * @return 去除空白后的字符串
      */
     public static String trimToEmpty(String str) {
-        return ApacheStringUtils.trimToEmpty(str);
+        return org.apache.commons.lang3.StringUtils.trimToEmpty(str);
     }
 
     /**
@@ -95,7 +94,7 @@ public class StringUtils {
      * @return 截取后的字符串
      */
     public static String substring(String str, int start) {
-        return ApacheStringUtils.substring(str, start);
+        return org.apache.commons.lang3.StringUtils.substring(str, start);
     }
 
     /**
@@ -107,7 +106,7 @@ public class StringUtils {
      * @return 截取后的字符串
      */
     public static String substring(String str, int start, int end) {
-        return ApacheStringUtils.substring(str, start, end);
+        return org.apache.commons.lang3.StringUtils.substring(str, start, end);
     }
 
     /**
@@ -118,7 +117,7 @@ public class StringUtils {
      * @return 是否以指定前缀开头
      */
     public static boolean startsWith(String str, String prefix) {
-        return ApacheStringUtils.startsWith(str, prefix);
+        return org.apache.commons.lang3.StringUtils.startsWith(str, prefix);
     }
 
     /**
@@ -129,7 +128,7 @@ public class StringUtils {
      * @return 是否以指定后缀结尾
      */
     public static boolean endsWith(String str, String suffix) {
-        return ApacheStringUtils.endsWith(str, suffix);
+        return org.apache.commons.lang3.StringUtils.endsWith(str, suffix);
     }
 
     /**
@@ -139,7 +138,7 @@ public class StringUtils {
      * @return 连接后的字符串
      */
     public static String join(Object[] elements) {
-        return ApacheStringUtils.join(elements);
+        return org.apache.commons.lang3.StringUtils.join(elements);
     }
 
     /**
@@ -150,7 +149,7 @@ public class StringUtils {
      * @return 连接后的字符串
      */
     public static String join(CharSequence separator, Object[] elements) {
-        return ApacheStringUtils.join(separator, elements);
+        return org.apache.commons.lang3.StringUtils.join(separator, elements);
     }
 
     /**
@@ -161,7 +160,7 @@ public class StringUtils {
      * @return 连接后的字符串
      */
     public static String join(CharSequence separator, Iterable<?> iterable) {
-        return ApacheStringUtils.join(separator, iterable);
+        return org.apache.commons.lang3.StringUtils.join(separator, iterable);
     }
 
     /**
@@ -172,7 +171,7 @@ public class StringUtils {
      * @return 分割后的字符串数组
      */
     public static String[] split(String str, String separator) {
-        return ApacheStringUtils.split(str, separator);
+        return org.apache.commons.lang3.StringUtils.split(str, separator);
     }
 
     /**
@@ -201,7 +200,7 @@ public class StringUtils {
      * @return 重复后的字符串
      */
     public static String repeat(String str, int repeat) {
-        return ApacheStringUtils.repeat(str, repeat);
+        return org.apache.commons.lang3.StringUtils.repeat(str, repeat);
     }
 
     /**
@@ -213,7 +212,7 @@ public class StringUtils {
      * @return 替换后的字符串
      */
     public static String replace(String text, String searchString, String replacement) {
-        return ApacheStringUtils.replace(text, searchString, replacement);
+        return org.apache.commons.lang3.StringUtils.replace(text, searchString, replacement);
     }
 
     /**
@@ -225,7 +224,7 @@ public class StringUtils {
      * @return 替换后的字符串
      */
     public static String replaceAll(String text, String searchString, String replacement) {
-        return ApacheStringUtils.replace(text, searchString, replacement);
+        return org.apache.commons.lang3.StringUtils.replace(text, searchString, replacement);
     }
 
     /**
@@ -235,7 +234,7 @@ public class StringUtils {
      * @return 小写字符串
      */
     public static String lowerCase(String str) {
-        return ApacheStringUtils.lowerCase(str);
+        return org.apache.commons.lang3.StringUtils.lowerCase(str);
     }
 
     /**
@@ -245,7 +244,7 @@ public class StringUtils {
      * @return 大写字符串
      */
     public static String upperCase(String str) {
-        return ApacheStringUtils.upperCase(str);
+        return org.apache.commons.lang3.StringUtils.upperCase(str);
     }
 
     /**
@@ -255,7 +254,7 @@ public class StringUtils {
      * @return 首字母大写的字符串
      */
     public static String capitalize(String str) {
-        return ApacheStringUtils.capitalize(str);
+        return org.apache.commons.lang3.StringUtils.capitalize(str);
     }
 
     /**
@@ -265,7 +264,7 @@ public class StringUtils {
      * @return 首字母小写的字符串
      */
     public static String uncapitalize(String str) {
-        return ApacheStringUtils.uncapitalize(str);
+        return org.apache.commons.lang3.StringUtils.uncapitalize(str);
     }
 
     /**
@@ -393,7 +392,7 @@ public class StringUtils {
      * @return 是否为数字
      */
     public static boolean isNumeric(String str) {
-        return ApacheStringUtils.isNumeric(str);
+        return org.apache.commons.lang3.StringUtils.isNumeric(str);
     }
 
     /**
@@ -403,7 +402,7 @@ public class StringUtils {
      * @return 是否为字母
      */
     public static boolean isAlpha(String str) {
-        return ApacheStringUtils.isAlpha(str);
+        return org.apache.commons.lang3.StringUtils.isAlpha(str);
     }
 
     /**
@@ -413,7 +412,7 @@ public class StringUtils {
      * @return 是否为字母或数字
      */
     public static boolean isAlphanumeric(String str) {
-        return ApacheStringUtils.isAlphanumeric(str);
+        return org.apache.commons.lang3.StringUtils.isAlphanumeric(str);
     }
 
     /**
