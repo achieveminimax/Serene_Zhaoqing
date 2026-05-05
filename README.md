@@ -103,31 +103,62 @@ graph TB
 ├── 📱 肇庆旅游_前端/                 # 微信小程序前端代码
 │   └── zq_travel_frontend/
 │       ├── components/              # 公共组件
+│       │   ├── bottom-bar/          # 底部导航栏
+│       │   ├── custom-icon/         # 自定义图标
+│       │   ├── empty/               # 空状态组件
+│       │   ├── fab/                 # 浮动按钮
+│       │   ├── grid-menu/           # 网格菜单
+│       │   ├── healing-icon/        # 疗愈图标
+│       │   ├── immersive-player/    # 沉浸式播放器
+│       │   ├── markdown-render/     # Markdown渲染
+│       │   ├── skeleton/            # 骨架屏
+│       │   └── timeline/            # 时间线
 │       ├── pages/                   # 页面文件
+│       │   ├── index/               # 首页
+│       │   ├── ai-agent/            # AI助手
+│       │   ├── music/               # 音乐
+│       │   ├── player/              # 播放器
+│       │   ├── playlist-detail/     # 播放列表详情
+│       │   ├── scenic-detail/       # 景点详情
+│       │   ├── recipe-detail/       # 食谱详情
+│       │   ├── shop-detail/         # 商品详情
+│       │   ├── search/              # 搜索
+│       │   ├── recommend-detail/    # 推荐详情
+│       │   ├── heart-rate-detail/   # 心率详情
+│       │   ├── steps-detail/        # 步数详情
+│       │   └── mine/                # 我的
+│       ├── custom-tab-bar/          # 自定义TabBar
 │       ├── utils/                   # 工具函数
-│       └── config/                  # 配置文件
+│       ├── config/                  # 配置文件
+│       ├── app.js                   # 小程序入口
+│       ├── app.json                 # 全局配置
+│       └── app.wxss                 # 全局样式
 │
 ├── 🔧 肇庆旅游_后端/                 # 后端微服务代码
 │   └── zq_travel_backend/
 │       ├── common/                  # 公共模块
-│       ├── gateway/                 # API网关
-│       └── services/                # 微服务模块
-│           ├── user-service/        # 用户服务 (8001)
-│           ├── scenic-service/      # 景点服务 (8002)
-│           ├── music-service/       # 音乐服务 (8003)
-│           ├── recipe-service/      # 食谱服务 (8004)
-│           ├── shop-service/        # 商店服务 (8005)
-│           ├── health-service/      # 健康服务 (8006)
-│           ├── ai-service/          # AI服务 (8007)
-│           ├── search-service/      # 搜索服务 (8008)
-│           └── file-service/        # 文件服务 (8009)
-│
-├── 📚 开发记录/                      # 开发日志归档
-│   └── 规则.md                      # 任务归档协议
+│       │   ├── common-core/         # 核心工具类
+│       │   └── pom.xml
+│       ├── gateway/                 # API网关 (Spring Cloud Gateway)
+│       ├── services/                # 微服务模块
+│       │   ├── user-service/        # 用户服务 (8001)
+│       │   ├── scenic-service/      # 景点服务 (8002)
+│       │   ├── music-service/       # 音乐服务 (8003)
+│       │   ├── recipe-service/      # 食谱服务 (8004)
+│       │   ├── shop-service/        # 商店服务 (8005)
+│       │   ├── health-service/      # 健康服务 (8006)
+│       │   ├── ai-service/          # AI服务 (8007)
+│       │   ├── search-service/      # 搜索服务 (8008)
+│       │   └── file-service/        # 文件服务 (8009)
+│       ├── docs/                    # 项目文档
+│       │   └── MODULE_STRUCTURE.md  # 模块结构说明
+│       └── pom.xml                  # 父POM
 │
 ├── 📖 项目需求文档.md                # 产品需求文档 (PRD)
 ├── 🏗️ system_architecture_design.md # 系统架构设计文档
 ├── 🔌 backend_api_interfaces.md     # 后端API接口清单
+├── 🤖 AGENTS.md                     # AI助手配置
+├── 📄 LICENSE                       # MIT开源许可证
 └── 📋 README.md                     # 项目总览 (本文件)
 ```
 
@@ -220,7 +251,9 @@ cd 肇庆旅游项目/肇庆旅游_前端/zq_travel_frontend
 | [项目需求文档](./项目需求文档.md) | 产品需求文档 (PRD)，包含完整的功能需求和非功能需求 |
 | [系统架构设计文档](./system_architecture_design.md) | 系统架构设计，包含技术选型、数据库设计、部署方案 |
 | [后端API接口清单](./backend_api_interfaces.md) | 79个API接口的详细清单 |
-| [开发归档协议](./开发记录/规则.md) | 开发任务完成后的归档规范 |
+| [AI助手配置](./AGENTS.md) | AI助手开发规范和配置说明 |
+| [LICENSE](./LICENSE) | MIT开源许可证 |
+| [模块结构说明](./肇庆旅游_后端/zq_travel_backend/docs/MODULE_STRUCTURE.md) | 后端模块结构详细说明 |
 
 ---
 
