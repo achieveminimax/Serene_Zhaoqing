@@ -1,0 +1,35 @@
+[
+  {
+    "resource": "user-service",
+    "resourceMode": 0,
+    "grade": 1,
+    "count": 50,
+    "intervalSec": 1,
+    "controlBehavior": 0,
+    "burst": 0,
+    "maxQueueingTimeoutMs": 500,
+    "clusterMode": false
+  },
+  {
+    "resource": "scenic-service",
+    "resourceMode": 0,
+    "grade": 1,
+    "count": 100,
+    "intervalSec": 1,
+    "controlBehavior": 0,
+    "burst": 0,
+    "maxQueueingTimeoutMs": 500,
+    "clusterMode": false
+  },
+  {
+    "resource": "ai-service",
+    "resourceMode": 0,
+    "grade": 1,
+    "count": 10,
+    "intervalSec": 1,
+    "controlBehavior": 0,
+    "burst": 0,
+    "maxQueueingTimeoutMs": 500,
+    "clusterMode": false
+  }
+]

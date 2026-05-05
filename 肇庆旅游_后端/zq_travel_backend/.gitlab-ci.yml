@@ -1,0 +1,134 @@
+# ============================================
+# GitLab CI/CD 流水线配置
+# 肇庆旅游小程序后端系统
+# ============================================
+
+# 流水线阶段定义
+stages:
+  - build          # 编译
+  - test           # 单元测试 + 覆盖率
+  - quality        # 代码质量检查
+  - package        # 打包 + Docker 镜像构建
+  - deploy-dev     # 推送镜像到开发环境仓库
+
+# 全局变量
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  DOCKER_REGISTRY: "$CI_REGISTRY"
+  DOCKER_IMAGE_PREFIX: "$CI_REGISTRY_IMAGE"
+  # Docker TLS 配置（用于 docker:dind）
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_DRIVER: overlay2
+
+# Maven 依赖缓存
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .m2/repository
+
+# --------------------------------------------
+# 阶段 1：编译
+# --------------------------------------------
+build:
+  stage: build
+  image: maven:3.9-eclipse-temurin-17-alpine
+  script:
+    - echo "===== 开始编译项目 ====="
+    - mvn $MAVEN_CLI_OPTS clean compile -DskipTests
+    - echo "===== 编译完成 ====="
+  artifacts:
+    paths:
+      - "**/target/classes"
+    expire_in: 1 week
+
+# --------------------------------------------
+# 阶段 2：单元测试 + 覆盖率
+# --------------------------------------------
+test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17-alpine
+  script:
+    - echo "===== 开始执行单元测试 ====="
+    - mvn $MAVEN_CLI_OPTS test
+    - echo "===== 单元测试执行完成 ====="
+    - echo "===== 生成覆盖率报告 ====="
+    - mvn $MAVEN_CLI_OPTS jacoco:report
+    - echo "===== 覆盖率报告生成完成 ====="
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - "**/target/surefire-reports/TEST-*.xml"
+    paths:
+      - "**/target/surefire-reports"
+      - "**/target/site/jacoco"
+    expire_in: 1 week
+  coverage: '/Total.*?([0-9]{1,3})%/'
+
+# --------------------------------------------
+# 阶段 3：代码质量检查
+# --------------------------------------------
+code-quality:
+  stage: quality
+  image: maven:3.9-eclipse-temurin-17-alpine
+  script:
+    - echo "===== 开始代码格式化检查 ====="
+    - mvn $MAVEN_CLI_OPTS spotless:check || (echo "代码格式不符合规范，请执行 mvn spotless:apply 格式化" && exit 1)
+    - echo "===== 代码格式化检查通过 ====="
+    - echo "===== 开始 Checkstyle 规范检查 ====="
+    - mvn $MAVEN_CLI_OPTS checkstyle:check -failsOnError=false
+    - echo "===== Checkstyle 规范检查完成 ====="
+  artifacts:
+    when: always
+    paths:
+      - "**/target/checkstyle-result.xml"
+      - "**/target/site/checkstyle.html"
+    expire_in: 1 week
+  allow_failure: true
+
+# --------------------------------------------
+# 阶段 4：打包 + Docker 镜像构建
+# --------------------------------------------
+package:
+  stage: package
+  image: docker:24-dind
+  services:
+    - docker:24-dind
+  before_script:
+    - echo "===== 登录 Docker 仓库 ====="
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "===== 开始 Maven 打包 ====="
+    - apk add --no-cache openjdk17 maven
+    - mvn $MAVEN_CLI_OPTS package -DskipTests
+    - echo "===== Maven 打包完成 ====="
+    - echo "===== 构建 Gateway 镜像 ====="
+    - docker build -f gateway/Dockerfile -t $DOCKER_IMAGE_PREFIX/gateway:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_PREFIX/gateway:latest .
+    - echo "===== Gateway 镜像构建完成 ====="
+  artifacts:
+    paths:
+      - "**/target/*.jar"
+    expire_in: 1 week
+
+# --------------------------------------------
+# 阶段 5：推送镜像到开发环境（仅 develop 分支）
+# --------------------------------------------
+deploy-dev:
+  stage: deploy-dev
+  image: docker:24-dind
+  services:
+    - docker:24-dind
+  before_script:
+    - echo "===== 登录 Docker 仓库 ====="
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "===== 推送 Gateway 镜像 ====="
+    - docker push $DOCKER_IMAGE_PREFIX/gateway:$CI_COMMIT_SHORT_SHA
+    - docker push $DOCKER_IMAGE_PREFIX/gateway:latest
+    - echo "===== 镜像推送完成 ====="
+  only:
+    - develop
+  environment:
+    name: development
+    url: https://dev-api.zqtravel.com

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<!--
+    肇庆旅游小程序 - Checkstyle 抑制配置
+    用于排除特定文件或规则的检查
+-->
+
+<suppressions>
+    <!-- 排除测试类 -->
+    <suppress checks=".*" files=".*Test\.java$"/>
+    <suppress checks=".*" files=".*Tests\.java$"/>
+    <suppress checks=".*" files=".*IT\.java$"/>
+
+    <!-- 排除生成的代码 -->
+    <suppress checks=".*" files="target[\\/]"/>
+    <suppress checks=".*" files="generated-sources[\\/]"/>
+    <suppress checks=".*" files="generated[\\/]"/>
+
+    <!-- 排除配置类中的 MagicNumber 检查 -->
+    <suppress checks="MagicNumber" files=".*Config\.java$"/>
+    <suppress checks="MagicNumber" files=".*Configuration\.java$"/>
+    <suppress checks="MagicNumber" files=".*Properties\.java$"/>
+
+    <!-- 排除常量定义类的检查 -->
+    <suppress checks="JavadocMethod" files=".*Constant.*\.java$"/>
+    <suppress checks="JavadocMethod" files=".*Enum.*\.java$"/>
+
+    <!-- 对 Application 主类放宽要求 -->
+    <suppress checks="HideUtilityClassConstructor" files=".*Application\.java$"/>
+
+    <!-- 对异常类放宽 Javadoc 要求 -->
+    <suppress checks="JavadocMethod" files=".*Exception\.java$"/>
+
+    <!-- 对 DTO/VO 类放宽部分检查 -->
+    <suppress checks="JavadocMethod" files=".*DTO\.java$"/>
+    <suppress checks="JavadocMethod" files=".*VO\.java$"/>
+    <suppress checks="JavadocMethod" files=".*Entity\.java$"/>
+</suppressions>
