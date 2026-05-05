@@ -91,6 +91,8 @@ graph TB
 | **AI服务** | MiniMax API | - |
 | **API网关** | Spring Cloud Gateway + Nginx | - |
 | **服务治理** | Nacos + Sentinel | - |
+| **CI/CD** | GitLab CI/CD + Docker | - |
+| **代码质量** | Spotless + Checkstyle + JaCoCo | - |
 | **容器化** | Docker + Kubernetes | 24.x / 1.28.x |
 | **开发语言** | Java | OpenJDK 17 |
 
@@ -138,7 +140,8 @@ graph TB
 │   └── zq_travel_backend/
 │       ├── common/                  # 公共模块
 │       │   ├── common-core/         # 核心工具类
-│       │   └── pom.xml
+│       │   ├── common-web/          # Web通用组件
+│       │   └── common-redis/        # Redis通用组件
 │       ├── gateway/                 # API网关 (Spring Cloud Gateway)
 │       ├── services/                # 微服务模块
 │       │   ├── user-service/        # 用户服务 (8001)
@@ -150,14 +153,18 @@ graph TB
 │       │   ├── ai-service/          # AI服务 (8007)
 │       │   ├── search-service/      # 搜索服务 (8008)
 │       │   └── file-service/        # 文件服务 (8009)
+│       ├── config/                  # 配置中心文件
+│       │   └── checkstyle/          # 代码规范配置
 │       ├── docs/                    # 项目文档
 │       │   └── MODULE_STRUCTURE.md  # 模块结构说明
+│       ├── docker-compose.yml       # 开发环境编排
+│       ├── .gitlab-ci.yml           # CI/CD流水线配置
 │       └── pom.xml                  # 父POM
 │
 ├── 📖 项目需求文档.md                # 产品需求文档 (PRD)
 ├── 🏗️ system_architecture_design.md # 系统架构设计文档
 ├── 🔌 backend_api_interfaces.md     # 后端API接口清单
-├── 🤖 AGENTS.md                     # AI助手配置
+├── 🤖 AGENTS.md                     # 开发规范文档
 ├── 📄 LICENSE                       # MIT开源许可证
 └── 📋 README.md                     # 项目总览 (本文件)
 ```
@@ -251,9 +258,20 @@ cd 肇庆旅游项目/肇庆旅游_前端/zq_travel_frontend
 | [项目需求文档](./项目需求文档.md) | 产品需求文档 (PRD)，包含完整的功能需求和非功能需求 |
 | [系统架构设计文档](./system_architecture_design.md) | 系统架构设计，包含技术选型、数据库设计、部署方案 |
 | [后端API接口清单](./backend_api_interfaces.md) | 79个API接口的详细清单 |
-| [AI助手配置](./AGENTS.md) | AI助手开发规范和配置说明 |
+| [开发规范文档](./AGENTS.md) | 代码开发规范、Git工作流、API设计规范 |
 | [LICENSE](./LICENSE) | MIT开源许可证 |
 | [模块结构说明](./肇庆旅游_后端/zq_travel_backend/docs/MODULE_STRUCTURE.md) | 后端模块结构详细说明 |
+
+### 开发记录
+
+| 记录 | 说明 |
+|------|------|
+| [01_Git忽略文件创建](./开发记录/01_Git忽略文件创建/) | 项目Git忽略文件配置 |
+| [02_基础框架搭建](./开发记录/02_基础框架搭建/) | M1阶段基础框架搭建 |
+| [03_StringUtils修复](./开发记录/03_StringUtils修复/) | 编译错误修复记录 |
+| [04_公共模块开发](./开发记录/04_公共模块开发/) | common-web + common-redis开发 |
+| [05_微服务基础设施配置](./开发记录/05_微服务基础设施配置/) | Gateway + Docker Compose + Nacos |
+| [06_CI/CD流水线配置](./开发记录/06_CI_CD流水线配置/) | GitLab CI/CD + 代码质量检查 |
 
 ---
 
@@ -265,6 +283,8 @@ cd 肇庆旅游项目/肇庆旅游_前端/zq_travel_frontend
 - 遵循 **Spring Boot** 最佳实践
 - 代码注释使用 **JavaDoc** 格式
 - 使用 **4个空格** 缩进，禁止Tab
+- 代码格式化使用 **Spotless** (`mvn spotless:apply`)
+- 代码规范检查使用 **Checkstyle** (`mvn checkstyle:check`)
 
 ### Git工作流
 
@@ -282,14 +302,34 @@ test: 测试相关
 chore: 构建过程或辅助工具变动
 ```
 
+### CI/CD流水线
+
+```mermaid
+flowchart LR
+    A[代码提交] --> B[build 编译]
+    B --> C[test 单元测试]
+    C --> D[quality 代码质量]
+    D --> E[package 打包构建]
+    E --> F[deploy-dev 推送镜像]
+```
+
+| 阶段 | 命令 | 说明 |
+|------|------|------|
+| build | `mvn clean compile` | 编译项目 |
+| test | `mvn test` | 执行单元测试 |
+| quality | `mvn spotless:check` + `mvn checkstyle:check` | 代码质量检查 |
+| package | `mvn package` + `docker build` | 打包并构建镜像 |
+| deploy-dev | `docker push` | 推送镜像到开发环境 |
+
 ### 开发流程
 
 1. **需求分析** - 阅读 [项目需求文档](./项目需求文档.md)
 2. **技术设计** - 参考 [系统架构设计文档](./system_architecture_design.md)
 3. **接口定义** - 参考 [后端API接口清单](./backend_api_interfaces.md)
-4. **编码实现** - 遵循代码规范
-5. **测试验证** - 单元测试 + 集成测试
-6. **文档归档** - 按照 [归档协议](./开发记录/规则.md) 完成文档
+4. **编码实现** - 遵循 [开发规范文档](./AGENTS.md)
+5. **代码格式化** - 执行 `mvn spotless:apply`
+6. **测试验证** - 单元测试 + 集成测试
+7. **文档归档** - 按照 [归档协议](./开发记录/规则.md) 完成文档
 
 ---
 
