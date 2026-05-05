@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>com.zqtravel</groupId>
+        <artifactId>zq-travel-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    
+    <artifactId>services</artifactId>
+    <packaging>pom</packaging>
+    
+    <name>services</name>
+    <description>微服务聚合模块 (M2阶段开发)</description>
+    
+    <modules>
+        <module>user-service</module>
+        <module>scenic-service</module>
+        <module>music-service</module>
+        <module>recipe-service</module>
+        <module>shop-service</module>
+        <module>health-service</module>
+        <module>ai-service</module>
+        <module>search-service</module>
+        <module>file-service</module>
+    </modules>
+    
+    <properties>
+        <maven.compiler.skip>true</maven.compiler.skip>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skipMain>true</skipMain>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
