@@ -42,6 +42,9 @@
         <!-- Redis -->
         <redisson.version>3.25.2</redisson.version>
         
+        <!-- 数据库迁移 -->
+        <flyway.version>10.11.0</flyway.version>
+        
         <!-- 测试版本 -->
         <junit.version>5.10.2</junit.version>
         <mockito.version>5.8.0</mockito.version>
@@ -136,6 +139,18 @@
                 <version>${redisson.version}</version>
             </dependency>
             
+            <!-- Flyway 数据库迁移 -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-mysql</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            
             <!-- 项目公共模块 -->
             <dependency>
                 <groupId>com.zqtravel</groupId>
@@ -187,9 +202,7 @@
     <modules>
         <module>common</module>
         <module>gateway</module>
-        <!--
         <module>services</module>
-        -->
     </modules>
     
     <build>
