@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqtravel.user.repository.UserAuthRepository">
+
+    <resultMap id="BaseResultMap" type="com.zqtravel.user.entity.UserAuth">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="auth_type" property="authType" />
+        <result column="auth_key" property="authKey" />
+        <result column="auth_secret" property="authSecret" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, auth_type, auth_key, auth_secret, created_at, updated_at
+    </sql>
+
+    <select id="selectByAuthTypeAndKey" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM user_auths
+        WHERE auth_type = #{authType}
+        AND auth_key = #{authKey}
+        LIMIT 1
+    </select>
+
+    <select id="selectByUserIdAndAuthType" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM user_auths
+        WHERE user_id = #{userId}
+        AND auth_type = #{authType}
+        LIMIT 1
+    </select>
+
+</mapper>

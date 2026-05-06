@@ -32,17 +32,21 @@ spring:
     placeholder-replacement: false
   
   # Redis配置
-  redis:
-    host: localhost
-    port: 6379
-    database: 0
-    timeout: 2000ms
-    lettuce:
-      pool:
-        max-active: 20
-        max-idle: 10
-        min-idle: 5
-        max-wait: -1ms
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 2s
+      lettuce:
+        pool:
+          max-size: 20
+          min-size: 5
+          max-wait-duration: -1
+  
+  # 配置导入（禁用Nacos配置）
+  # config:
+  #   import: "optional:nacos:"
   
   # Nacos服务注册发现
   cloud:
@@ -52,11 +56,52 @@ spring:
         namespace: dev
         group: DEFAULT_GROUP
       config:
+        enabled: false
         server-addr: localhost:8848
         file-extension: yaml
         namespace: dev
         group: DEFAULT_GROUP
         refresh-enabled: true
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+      eager: true
+      datasource:
+        flow:
+          nacos:
+            server-addr: localhost:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: SENTINEL_GROUP
+            rule-type: flow
+  
+  # RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123
+    virtual-host: /
+    connection-timeout: 5000
+    listener:
+      simple:
+        prefetch: 10
+        concurrency: 5
+        max-concurrency: 10
+        acknowledge-mode: manual
+    template:
+      retry:
+        enabled: true
+        max-attempts: 3
+  
+  # 缓存配置
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000  # 1小时
+      cache-null-values: false
+      use-key-prefix: true
+      key-prefix: "zq:music:"
 
 # MyBatis Plus配置
 mybatis-plus:
