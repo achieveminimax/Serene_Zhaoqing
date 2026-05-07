@@ -59,9 +59,9 @@ temp/
 肇庆旅游_后端/*/lib/
 
 # Spring Boot
-肇庆旅游_backend/*/application-local.yml
-肇庆旅游_backend/*/application-dev-local.yml
-肇庆旅游_backend/*/application-prod-local.yml
+肇庆旅游_后端/*/application-local.yml
+肇庆旅游_后端/*/application-dev-local.yml
+肇庆旅游_后端/*/application-prod-local.yml
 
 # ============================================
 # 前端项目 - 微信小程序 忽略
