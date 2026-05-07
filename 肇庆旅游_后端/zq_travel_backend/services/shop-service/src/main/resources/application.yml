@@ -31,6 +31,20 @@ spring:
     out-of-order: false
     placeholder-replacement: false
   
+  # RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 10
+        concurrency: 5
+        max-concurrency: 10
+  
   # Redis配置
   data:
     redis:
@@ -57,6 +71,30 @@ spring:
         namespace: dev
         group: DEFAULT_GROUP
         refresh-enabled: true
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+      eager: true
+      datasource:
+        flow:
+          nacos:
+            server-addr: localhost:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: SENTINEL_GROUP
+            rule-type: flow
+
+# Swagger配置
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+  show-actuator: false
 
 # MyBatis Plus配置
 mybatis-plus:

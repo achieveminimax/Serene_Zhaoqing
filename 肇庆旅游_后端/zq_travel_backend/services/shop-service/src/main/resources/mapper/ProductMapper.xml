@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqtravel.shop.mapper.ProductMapper">
+
+    <resultMap id="BaseResultMap" type="com.zqtravel.shop.entity.Product">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="description" property="description"/>
+        <result column="images" property="images"/>
+        <result column="price" property="price"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="stock" property="stock"/>
+        <result column="sales_count" property="salesCount"/>
+        <result column="status" property="status"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="version" property="version"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, category_id, description, images, price, original_price, stock, sales_count, status, created_at, updated_at, is_deleted, version
+    </sql>
+
+    <select id="selectProductPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM products
+        WHERE is_deleted = 0
+        <if test="categoryId != null">
+            AND category_id = #{categoryId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (name LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="minPrice != null">
+            AND price >= #{minPrice}
+        </if>
+        <if test="maxPrice != null">
+            AND price &lt;= #{maxPrice}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        ORDER BY
+        <choose>
+            <when test="page != null and page.orders != null and page.orders.size() > 0">
+                <foreach collection="page.orders" item="order" separator=",">
+                    ${order.column} ${order.asc ? 'ASC' : 'DESC'}
+                </foreach>
+            </when>
+            <otherwise>
+                created_at DESC
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

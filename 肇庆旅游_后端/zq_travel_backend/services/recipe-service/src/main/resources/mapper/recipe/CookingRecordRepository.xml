@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqtravel.recipe.repository.CookingRecordRepository">
+
+    <select id="selectByUserId" resultType="com.zqtravel.recipe.entity.CookingRecord">
+        SELECT *
+        FROM cooking_records
+        WHERE user_id = #{userId}
+        ORDER BY cooked_at DESC
+    </select>
+
+    <select id="selectByUserAndRecipe" resultType="com.zqtravel.recipe.entity.CookingRecord">
+        SELECT *
+        FROM cooking_records
+        WHERE user_id = #{userId}
+        AND recipe_id = #{recipeId}
+        ORDER BY cooked_at DESC
+    </select>
+
+    <select id="countByUserId" resultType="int">
+        SELECT COUNT(*)
+        FROM cooking_records
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectRecentRecipeIds" resultType="java.lang.Long">
+        SELECT DISTINCT recipe_id
+        FROM cooking_records
+        WHERE user_id = #{userId}
+        ORDER BY cooked_at DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="selectByTimeRange" resultType="com.zqtravel.recipe.entity.CookingRecord">
+        SELECT *
+        FROM cooking_records
+        WHERE cooked_at BETWEEN #{startTime} AND #{endTime}
+        ORDER BY cooked_at DESC
+    </select>
+
+</mapper>

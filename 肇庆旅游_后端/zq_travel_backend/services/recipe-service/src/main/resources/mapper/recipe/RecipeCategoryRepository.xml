@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqtravel.recipe.repository.RecipeCategoryRepository">
+
+    <select id="selectAllOrderBySort" resultType="com.zqtravel.recipe.entity.RecipeCategory">
+        SELECT *
+        FROM recipe_categories
+        ORDER BY sort_order ASC, created_at DESC
+    </select>
+
+</mapper>
